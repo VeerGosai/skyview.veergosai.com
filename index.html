@@ -1,0 +1,1654 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>SkyView SA — South Africa Aviation Intelligence</title>
+<link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
+<script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.1/dist/chart.umd.min.js"></script>
+<style>
+/* ═══════════════  RESET & VARIABLES  ═══════════════ */
+:root {
+  --blue-900: #1e3a5f;
+  --blue-800: #1e40af;
+  --blue-700: #1d4ed8;
+  --blue-600: #2563eb;
+  --blue-500: #3b82f6;
+  --blue-400: #60a5fa;
+  --blue-300: #93c5fd;
+  --blue-200: #bfdbfe;
+  --blue-100: #dbeafe;
+  --blue-50: #eff6ff;
+  --white: #ffffff;
+  --gray-50: #f8fafc;
+  --gray-100: #f1f5f9;
+  --gray-200: #e2e8f0;
+  --gray-300: #cbd5e1;
+  --gray-400: #94a3b8;
+  --gray-500: #64748b;
+  --gray-600: #475569;
+  --gray-700: #334155;
+  --gray-800: #1e293b;
+  --gray-900: #0f172a;
+  --sidebar-w: 380px;
+  --header-h: 52px;
+}
+* { margin:0; padding:0; box-sizing:border-box; border-radius: 0 !important; }
+html, body { height: 100%; overflow: hidden; }
+body {
+  font-family: -apple-system, BlinkMacSystemFont, 'Inter', 'Segoe UI', sans-serif;
+  background: var(--white);
+  color: var(--gray-800);
+  font-size: 13px;
+  line-height: 1.5;
+}
+::-webkit-scrollbar { width: 6px; }
+::-webkit-scrollbar-track { background: var(--gray-100); }
+::-webkit-scrollbar-thumb { background: var(--gray-300); }
+::-webkit-scrollbar-thumb:hover { background: var(--blue-400); }
+
+/* ═══════════════  HEADER  ═══════════════ */
+.header {
+  height: var(--header-h); background: var(--blue-900);
+  display: flex; align-items: center; justify-content: space-between;
+  padding: 0 20px; color: var(--white); z-index: 1000;
+  border-bottom: 2px solid var(--blue-700);
+}
+.header-left { display: flex; align-items: center; gap: 12px; }
+.header-logo {
+  font-size: 17px; font-weight: 800; letter-spacing: -0.5px;
+  display: flex; align-items: center; gap: 8px;
+}
+.header-logo svg { opacity: 0.9; }
+.header-divider {
+  width: 1px; height: 28px; background: rgba(255,255,255,0.2);
+}
+.header-right { display: flex; align-items: center; gap: 16px; }
+
+/* Month Selector */
+.month-selector {
+  display: flex; align-items: center; gap: 0;
+  background: rgba(255,255,255,0.1); border: 1px solid rgba(255,255,255,0.2);
+}
+.month-btn {
+  width: 32px; height: 32px; background: none; border: none;
+  color: var(--white); cursor: pointer; display: flex;
+  align-items: center; justify-content: center;
+  transition: background 0.15s;
+}
+.month-btn:hover { background: rgba(255,255,255,0.15); }
+.month-label {
+  padding: 0 14px; font-weight: 700; font-size: 13px;
+  min-width: 120px; text-align: center;
+  user-select: none;
+}
+.header-stat {
+  display: flex; flex-direction: column; align-items: flex-end;
+  line-height: 1.2;
+}
+.header-stat-value { font-size: 15px; font-weight: 800; }
+.header-stat-label { font-size: 10px; opacity: 0.6; text-transform: uppercase; letter-spacing: 0.5px; }
+
+/* ═══════════════  LAYOUT  ═══════════════ */
+.layout {
+  display: flex; height: calc(100vh - var(--header-h));
+}
+
+/* ═══════════════  SIDEBAR  ═══════════════ */
+.sidebar {
+  width: var(--sidebar-w); min-width: var(--sidebar-w);
+  background: var(--white); border-right: 1px solid var(--gray-200);
+  display: flex; flex-direction: column; overflow: hidden;
+  z-index: 500;
+}
+.sidebar-tabs {
+  display: flex; border-bottom: 2px solid var(--gray-200);
+  background: var(--gray-50);
+}
+.sidebar-tab {
+  flex: 1; padding: 10px 0; text-align: center;
+  font-size: 11px; font-weight: 700; text-transform: uppercase;
+  letter-spacing: 0.5px; color: var(--gray-500);
+  cursor: pointer; border: none; background: none;
+  border-bottom: 2px solid transparent;
+  margin-bottom: -2px; transition: all 0.15s;
+  display: flex; flex-direction: column; align-items: center; gap: 3px;
+}
+.sidebar-tab:hover { color: var(--blue-600); background: var(--blue-50); }
+.sidebar-tab.active {
+  color: var(--blue-700); border-bottom-color: var(--blue-600);
+  background: var(--white);
+}
+.sidebar-tab svg { width: 16px; height: 16px; }
+.sidebar-content {
+  flex: 1; overflow-y: auto; overflow-x: hidden;
+}
+.tab-panel { display: none; }
+.tab-panel.active { display: block; }
+
+/* Sidebar Sections */
+.sb-section {
+  border-bottom: 1px solid var(--gray-200);
+  padding: 16px;
+}
+.sb-section:last-child { border-bottom: none; }
+.sb-title {
+  font-size: 11px; font-weight: 800; text-transform: uppercase;
+  letter-spacing: 0.8px; color: var(--gray-500);
+  margin-bottom: 12px; display: flex; align-items: center; gap: 6px;
+}
+.sb-title svg { width: 14px; height: 14px; }
+
+/* KPI Row */
+.kpi-grid {
+  display: grid; grid-template-columns: 1fr 1fr; gap: 8px;
+}
+.kpi-card {
+  padding: 12px; background: var(--gray-50);
+  border: 1px solid var(--gray-200);
+}
+.kpi-value {
+  font-size: 22px; font-weight: 800; color: var(--blue-700);
+  line-height: 1;
+}
+.kpi-label {
+  font-size: 10px; color: var(--gray-500); text-transform: uppercase;
+  letter-spacing: 0.5px; margin-top: 4px;
+}
+.kpi-sub {
+  font-size: 10px; color: var(--gray-400); margin-top: 2px;
+}
+
+/* Route list */
+.route-list { max-height: 400px; overflow-y: auto; }
+.route-item {
+  display: flex; align-items: center; gap: 10px;
+  padding: 8px 10px; cursor: pointer;
+  border-bottom: 1px solid var(--gray-100);
+  transition: background 0.1s;
+}
+.route-item:hover { background: var(--blue-50); }
+.route-item.selected { background: var(--blue-100); border-left: 3px solid var(--blue-600); }
+.route-codes {
+  font-weight: 800; font-size: 13px; color: var(--blue-800);
+  min-width: 72px;
+}
+.route-bar-wrap { flex: 1; }
+.route-bar {
+  height: 6px; background: var(--gray-200); overflow: hidden;
+  display: flex;
+}
+.route-bar-seg { height: 100%; transition: width 0.4s; }
+.route-meta {
+  font-size: 10px; color: var(--gray-500); text-align: right;
+  min-width: 60px;
+}
+.route-meta strong { color: var(--gray-700); font-size: 12px; display: block; }
+
+/* Dominance bars */
+.dominance-row {
+  display: flex; align-items: center; gap: 8px;
+  margin-bottom: 8px;
+}
+.dominance-airline {
+  font-size: 11px; font-weight: 700; min-width: 60px;
+  color: var(--gray-700);
+}
+.dominance-bar-wrap {
+  flex: 1; height: 20px; background: var(--gray-100);
+  border: 1px solid var(--gray-200); position: relative; overflow: hidden;
+  position: relative;
+}
+.dominance-bar-fill {
+  height: 100%; transition: width 0.5s cubic-bezier(.4,0,.2,1), background 0.3s;
+  display: flex; align-items: center; padding-left: 6px;
+  font-size: 10px; font-weight: 800; color: var(--white);
+  white-space: nowrap;
+}
+.dominance-bar-num {
+  position: absolute;
+  left: 8px;
+  top: 0; bottom: 0;
+  display: flex; align-items: center;
+  font-size: 10px; font-weight: 800; color: #111;
+  pointer-events: none;
+}
+.dominance-seats {
+  font-size: 10px; color: var(--gray-500); min-width: 56px; text-align: right;
+}
+
+/* Airline cards */
+.airline-card {
+  padding: 10px; border: 1px solid var(--gray-200);
+  margin-bottom: 8px; background: var(--white);
+  cursor: pointer; transition: all 0.15s;
+}
+.airline-card:hover { border-color: var(--blue-400); background: var(--blue-50); }
+.airline-card.selected { border-color: var(--blue-600); background: var(--blue-50); }
+.airline-header {
+  display: flex; align-items: center; justify-content: space-between;
+  margin-bottom: 8px;
+}
+.airline-name { font-weight: 800; font-size: 14px; }
+.airline-code {
+  font-size: 11px; font-weight: 700; padding: 2px 8px;
+  background: var(--gray-100); color: var(--gray-600);
+  border: 1px solid var(--gray-200);
+}
+.airline-stats {
+  display: grid; grid-template-columns: repeat(3, 1fr); gap: 6px;
+}
+.airline-stat {
+  text-align: center; padding: 6px 4px; background: var(--gray-50);
+}
+.airline-stat-val { font-size: 15px; font-weight: 800; color: var(--blue-700); }
+.airline-stat-lbl { font-size: 9px; color: var(--gray-500); text-transform: uppercase; }
+
+/* Fleet table */
+.fleet-table { width: 100%; border-collapse: collapse; }
+.fleet-table th {
+  text-align: left; font-size: 10px; font-weight: 700;
+  text-transform: uppercase; letter-spacing: 0.5px;
+  color: var(--gray-500); padding: 8px 6px;
+  border-bottom: 2px solid var(--gray-200);
+  background: var(--gray-50);
+}
+.fleet-table td {
+  padding: 7px 6px; border-bottom: 1px solid var(--gray-100);
+  font-size: 12px;
+}
+.fleet-table tr:hover td { background: var(--blue-50); }
+.cap-bar {
+  width: 100%; height: 4px; background: var(--gray-200);
+}
+.cap-bar-fill { height: 100%; background: var(--blue-500); }
+
+/* ═══════════════  MAP AREA  ═══════════════ */
+.map-area { flex: 1; position: relative; }
+#map { width: 100%; height: 100%; }
+
+/* Map legend */
+.map-legend {
+  position: absolute; bottom: 20px; right: 20px; z-index: 800;
+  background: var(--white); border: 1px solid var(--gray-200);
+  padding: 12px 14px; font-size: 11px; min-width: 180px;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+}
+.map-legend h4 {
+  font-size: 10px; font-weight: 800; text-transform: uppercase;
+  letter-spacing: 0.5px; color: var(--gray-500); margin-bottom: 8px;
+}
+.legend-item {
+  display: flex; align-items: center; gap: 8px;
+  margin-bottom: 4px;
+}
+.legend-swatch {
+  width: 14px; height: 4px; flex-shrink: 0;
+}
+
+/* Map info bar */
+.map-info-bar {
+  position: absolute; top: 12px; left: 70px; z-index: 800;
+  display: flex; gap: 8px;
+}
+.map-chip {
+  background: var(--white); border: 1px solid var(--gray-200);
+  padding: 6px 12px; font-size: 11px; font-weight: 700;
+  display: flex; align-items: center; gap: 6px;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.08);
+  color: var(--gray-700);
+}
+.map-chip .chip-val { color: var(--blue-700); }
+.map-chip svg { width: 14px; height: 14px; color: var(--gray-400); }
+
+/* Map right panel (route detail overlay) */
+.map-detail {
+  position: absolute; top: 12px; right: 12px; z-index: 800;
+  width: 320px; background: var(--white);
+  border: 1px solid var(--gray-200);
+  box-shadow: 0 4px 16px rgba(0,0,0,0.12);
+  display: none; max-height: calc(100% - 24px); overflow-y: auto;
+}
+.map-detail.active { display: block; animation: slideInRight 0.32s cubic-bezier(.4,0,.2,1) both; }
+.map-detail-header {
+  padding: 14px 16px; background: var(--blue-900); color: var(--white);
+  display: flex; align-items: center; justify-content: space-between;
+}
+.map-detail-header h3 { font-size: 15px; font-weight: 800; }
+.map-detail-close {
+  background: none; border: none; color: rgba(255,255,255,0.7);
+  cursor: pointer; font-size: 18px; padding: 0; line-height: 1;
+}
+.map-detail-close:hover { color: var(--white); }
+.map-detail-body { padding: 14px 16px; }
+.map-detail-body .sb-title { margin-top: 12px; }
+.map-detail-body .sb-title:first-child { margin-top: 0; }
+
+/* Leaflet overrides */
+.leaflet-popup-content-wrapper {
+  border-radius: 0 !important;
+  box-shadow: 0 2px 12px rgba(0,0,0,0.15) !important;
+}
+.leaflet-popup-tip-container { display: none; }
+.leaflet-control-zoom a { border-radius: 0 !important; }
+.leaflet-control-zoom { border-radius: 0 !important; border: 1px solid var(--gray-300) !important; }
+.leaflet-interactive:focus { outline: none !important; }
+path.leaflet-interactive:focus { outline: none !important; }
+
+/* ═══════════════  CHART CONTAINERS  ═══════════════ */
+.chart-wrap { position: relative; width: 100%; }
+.chart-wrap canvas { width: 100% !important; }
+
+/* ═══════════════  MISC  ═══════════════ */
+.text-blue { color: var(--blue-700); }
+.mt-12 { margin-top: 12px; }
+
+
+
+/* ═══════════════  MOBILE  ═══════════════ */
+@media (max-width: 768px) {
+  :root { --header-h: 48px; --sidebar-w: 100%; }
+
+  /* Header */
+  .header { padding: 0 12px; }
+  .header-left { gap: 8px; }
+  .header-logo { font-size: 14px; gap: 6px; }
+  .header-logo svg { width: 18px; height: 18px; }
+  .header-divider { display: none; }
+  .header-left > div:last-child { display: none; }
+  .header-stat { display: none; }
+  .header-right { gap: 8px; }
+  .month-label { min-width: 90px; font-size: 12px; padding: 0 8px; }
+  .month-btn { width: 28px; height: 28px; }
+
+  /* Layout: map on top, sidebar below */
+  .layout { flex-direction: column; height: calc(100vh - var(--header-h)); overflow-y: auto; }
+
+  /* Map takes ~45% of screen */
+  .map-area { height: 45vh; min-height: 260px; flex: none; position: relative; }
+  #map { height: 100%; }
+
+  /* Sidebar fills remaining space, scrollable */
+  .sidebar {
+    width: 100%; min-width: 100%;
+    height: auto; min-height: 55vh;
+    border-right: none; border-top: 2px solid var(--gray-200);
+    overflow: visible;
+  }
+  .sidebar-content { overflow-y: visible; }
+
+  /* Tabs: smaller text, tighter */
+  .sidebar-tab { font-size: 9px; padding: 8px 0; gap: 2px; }
+  .sidebar-tab svg { width: 14px; height: 14px; }
+
+  /* KPI grid 2-col stays, just smaller values */
+  .kpi-value { font-size: 18px; }
+  .kpi-card { padding: 8px 10px; }
+
+  /* Route list: no max-height restriction on mobile */
+  .route-list { max-height: none; }
+
+  /* Map info bar: smaller chips, wrap allowed */
+  .map-info-bar { left: 46px; flex-wrap: wrap; gap: 4px; }
+  .map-chip { font-size: 10px; padding: 4px 8px; }
+  .map-chip svg { display: none; }
+
+  /* Map detail panel: full width at bottom */
+  .map-detail {
+    position: fixed !important;
+    top: auto !important; bottom: 0; left: 0; right: 0;
+    width: 100% !important; max-height: 60vh;
+    z-index: 1500;
+    border-top: 2px solid var(--blue-700);
+    border-left: none; border-right: none; border-bottom: none;
+    box-shadow: 0 -4px 24px rgba(0,0,0,0.18);
+    overflow-y: auto;
+  }
+  .map-detail.active { animation: slideUpPanel 0.32s cubic-bezier(.4,0,.2,1) both; }
+
+  /* Map legend: smaller, bottom-left to avoid detail panel */
+  .map-legend { bottom: 10px; right: auto; left: 10px; min-width: 140px; font-size: 10px; padding: 8px 10px; }
+
+  /* Charts: a bit taller so they're readable */
+  .chart-wrap[style*="height:180px"] { height: 150px !important; }
+  .chart-wrap[style*="height:160px"] { height: 140px !important; }
+  .chart-wrap[style*="height:140px"] { height: 125px !important; }
+  .chart-wrap[style*="height:130px"] { height: 115px !important; }
+
+  /* Fleet table: allow horizontal scroll */
+  #fleet-table-wrap { overflow-x: auto; }
+  .fleet-table { min-width: 320px; }
+
+  /* Airline cards: compact */
+  .airline-card { margin-bottom: 6px; padding: 8px 10px; }
+  .airline-stat-val { font-size: 13px; }
+
+  /* Dominance bars text */
+  .dominance-airline { min-width: 44px; font-size: 10px; }
+  .dominance-seats { min-width: 44px; font-size: 10px; }
+
+  /* Sections slightly tighter */
+  .sb-section { padding: 12px; }
+}
+
+@keyframes slideUpPanel {
+  from { opacity:0; transform: translateY(40px); }
+  to   { opacity:1; transform: translateY(0); }
+}
+
+/* ═══════════════  ANIMATIONS  ═══════════════ */
+@keyframes fadeIn        { from { opacity:0; } to { opacity:1; } }
+@keyframes fadeUp        { from { opacity:0; transform:translateY(10px); } to { opacity:1; transform:translateY(0); } }
+@keyframes fadeDown      { from { opacity:0; transform:translateY(-10px); } to { opacity:1; transform:translateY(0); } }
+@keyframes slideInRight  { from { opacity:0; transform:translateX(24px); } to { opacity:1; transform:translateX(0); } }
+@keyframes slideInLeft   { from { opacity:0; transform:translateX(-16px); } to { opacity:1; transform:translateX(0); } }
+@keyframes scaleIn       { from { opacity:0; transform:scale(0.96); } to { opacity:1; transform:scale(1); } }
+
+/* Header entrance — removed to prevent full-screen flash */
+/* Sidebar entrance — removed to prevent full-screen flash */
+
+/* Map info chips */
+.map-chip {
+  opacity: 0;
+  animation: fadeDown 0.5s cubic-bezier(.4,0,.2,1) forwards;
+  animation-delay: 0.3s;
+}
+
+/* Map legend */
+.map-legend {
+  animation: fadeIn 0.5s cubic-bezier(.4,0,.2,1) both;
+  animation-delay: 0.4s;
+}
+
+/* Map detail panel — see .map-detail.active above for animation */
+
+/* Tab panel fade when switching tabs */
+.tab-panel.active { animation: fadeIn 0.28s cubic-bezier(.4,0,.2,1) both; }
+
+/* KPI cards stagger inside active tab */
+.tab-panel.active .kpi-card:nth-child(1) { animation: fadeUp 0.35s cubic-bezier(.4,0,.2,1) both; animation-delay: 0.04s; }
+.tab-panel.active .kpi-card:nth-child(2) { animation: fadeUp 0.35s cubic-bezier(.4,0,.2,1) both; animation-delay: 0.08s; }
+.tab-panel.active .kpi-card:nth-child(3) { animation: fadeUp 0.35s cubic-bezier(.4,0,.2,1) both; animation-delay: 0.12s; }
+.tab-panel.active .kpi-card:nth-child(4) { animation: fadeUp 0.35s cubic-bezier(.4,0,.2,1) both; animation-delay: 0.16s; }
+.tab-panel.active .kpi-card:nth-child(5) { animation: fadeUp 0.35s cubic-bezier(.4,0,.2,1) both; animation-delay: 0.20s; }
+.tab-panel.active .kpi-card:nth-child(6) { animation: fadeUp 0.35s cubic-bezier(.4,0,.2,1) both; animation-delay: 0.24s; }
+
+/* Airline cards stagger */
+.tab-panel.active .airline-card:nth-child(1) { animation: fadeUp 0.35s cubic-bezier(.4,0,.2,1) both; animation-delay: 0.05s; }
+.tab-panel.active .airline-card:nth-child(2) { animation: fadeUp 0.35s cubic-bezier(.4,0,.2,1) both; animation-delay: 0.10s; }
+.tab-panel.active .airline-card:nth-child(3) { animation: fadeUp 0.35s cubic-bezier(.4,0,.2,1) both; animation-delay: 0.15s; }
+.tab-panel.active .airline-card:nth-child(4) { animation: fadeUp 0.35s cubic-bezier(.4,0,.2,1) both; animation-delay: 0.20s; }
+.tab-panel.active .airline-card:nth-child(5) { animation: fadeUp 0.35s cubic-bezier(.4,0,.2,1) both; animation-delay: 0.25s; }
+
+/* Route items stagger */
+.tab-panel.active .route-item:nth-child(-n+8) { animation: fadeUp 0.3s cubic-bezier(.4,0,.2,1) both; }
+.tab-panel.active .route-item:nth-child(1)  { animation-delay: 0.03s; }
+.tab-panel.active .route-item:nth-child(2)  { animation-delay: 0.06s; }
+.tab-panel.active .route-item:nth-child(3)  { animation-delay: 0.09s; }
+.tab-panel.active .route-item:nth-child(4)  { animation-delay: 0.12s; }
+.tab-panel.active .route-item:nth-child(5)  { animation-delay: 0.15s; }
+.tab-panel.active .route-item:nth-child(6)  { animation-delay: 0.18s; }
+.tab-panel.active .route-item:nth-child(7)  { animation-delay: 0.21s; }
+.tab-panel.active .route-item:nth-child(8)  { animation-delay: 0.24s; }
+
+/* Fleet table rows — animated via JS in renderFleet() */
+.fleet-row-anim { animation: fadeUp 0.3s cubic-bezier(.4,0,.2,1) both; }
+
+/* Detail panel content */
+.map-detail.active .kpi-card  { animation: scaleIn 0.3s cubic-bezier(.4,0,.2,1) both; animation-delay: 0.15s; }
+.map-detail.active .dominance-row { animation: fadeUp 0.3s cubic-bezier(.4,0,.2,1) both; animation-delay: 0.2s; }
+.map-detail.active .sb-title  { animation: fadeIn 0.3s cubic-bezier(.4,0,.2,1) both; animation-delay: 0.1s; }
+
+/* Chart sections */
+.tab-panel.active .chart-wrap { animation: fadeIn 0.45s cubic-bezier(.4,0,.2,1) both; animation-delay: 0.2s; }
+
+/* Section titles */
+.tab-panel.active .sb-title { animation: fadeIn 0.35s cubic-bezier(.4,0,.2,1) both; animation-delay: 0.05s; }
+
+/* Interactive hover polish */
+.kpi-card { transition: box-shadow 0.2s, transform 0.2s; }
+.kpi-card:hover { box-shadow: 0 4px 12px rgba(37,99,235,0.12); transform: translateY(-1px); }
+.route-item { transition: background 0.15s, border-left 0.15s; }
+.airline-card { transition: all 0.18s cubic-bezier(.4,0,.2,1); }
+.airline-card:hover { transform: translateY(-1px); box-shadow: 0 4px 14px rgba(37,99,235,0.12); }
+.month-btn { transition: background 0.15s, transform 0.12s; }
+.month-btn:hover { transform: scale(1.12); }
+.sidebar-tab { transition: all 0.18s cubic-bezier(.4,0,.2,1); }
+.map-chip { transition: box-shadow 0.2s, transform 0.15s; }
+.map-chip:hover { transform: translateY(-1px); box-shadow: 0 4px 10px rgba(0,0,0,0.12); }
+</style>
+</head>
+<body>
+
+<!-- Header -->
+<header class="header">
+  <div class="header-left">
+    <div class="header-logo">
+      <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M17.8 19.2 16 11l3.5-3.5C21 6 21.5 4 21 3c-1-.5-3 0-4.5 1.5L13 8 4.8 6.2c-.5-.1-.9.1-1.1.5l-.3.5c-.2.4-.1.9.3 1.1l5.4 3.1-3.5 3.5-2.2-.7c-.3-.1-.7 0-.9.2l-.3.3c-.2.3-.1.7.1.9l2.8 2 2 2.8c.2.3.6.4.9.1l.3-.3c.3-.2.3-.6.2-.9l-.7-2.2 3.5-3.5 3.1 5.4c.2.4.7.5 1.1.3l.5-.3c.4-.2.6-.6.5-1.1z"/></svg>
+      SkyView SA
+    </div>
+    <div class="header-divider"></div>
+    <div style="font-size:11px; opacity:0.6">South Africa Aviation Intelligence</div>
+  </div>
+  <div class="header-right">
+    <div class="header-stat" id="hdr-flights">
+      <span class="header-stat-value">--</span>
+      <span class="header-stat-label">Monthly Flights</span>
+    </div>
+    <div class="header-stat" id="hdr-seats">
+      <span class="header-stat-value">--</span>
+      <span class="header-stat-label">Monthly Seats</span>
+    </div>
+    <div class="header-stat" id="hdr-routes">
+      <span class="header-stat-value">--</span>
+      <span class="header-stat-label">Active Routes</span>
+    </div>
+    <div class="header-divider"></div>
+    <div class="month-selector">
+      <button class="month-btn" id="month-prev" title="Previous month">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="m15 18-6-6 6-6"/></svg>
+      </button>
+      <div class="month-label" id="month-label">--</div>
+      <button class="month-btn" id="month-next" title="Next month">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="m9 18 6-6-6-6"/></svg>
+      </button>
+    </div>
+  </div>
+</header>
+
+<!-- Layout -->
+<div class="layout">
+
+  <!-- Sidebar -->
+  <aside class="sidebar">
+    <div class="sidebar-tabs">
+      <button class="sidebar-tab active" data-tab="overview">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/><rect x="14" y="14" width="7" height="7"/></svg>
+        Overview
+      </button>
+      <button class="sidebar-tab" data-tab="routes">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 6 7 17l-5-5"/><path d="m22 10-7.5 7.5L13 16"/></svg>
+        Routes
+      </button>
+      <button class="sidebar-tab" data-tab="airlines">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M2 20h.01"/><path d="M7 20v-4"/><path d="M12 20v-8"/><path d="M17 20V8"/><path d="M22 4v16"/></svg>
+        Airlines
+      </button>
+      <button class="sidebar-tab" data-tab="fleet">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M17.8 19.2 16 11l3.5-3.5C21 6 21.5 4 21 3c-1-.5-3 0-4.5 1.5L13 8 4.8 6.2c-.5-.1-.9.1-1.1.5l-.3.5c-.2.4-.1.9.3 1.1l5.4 3.1-3.5 3.5-2.2-.7c-.3-.1-.7 0-.9.2l-.3.3c-.2.3-.1.7.1.9l2.8 2 2 2.8c.2.3.6.4.9.1l.3-.3c.3-.2.3-.6.2-.9l-.7-2.2 3.5-3.5 3.1 5.4c.2.4.7.5 1.1.3l.5-.3c.4-.2.6-.6.5-1.1z"/></svg>
+        Fleet
+      </button>
+      <button class="sidebar-tab" data-tab="schedule">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+        Schedule
+      </button>
+    </div>
+
+    <div class="sidebar-content">
+      <!-- OVERVIEW TAB -->
+      <div class="tab-panel active" id="panel-overview">
+        <div class="sb-section">
+          <div class="sb-title">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 12h-4l-3 9L9 3l-3 9H2"/></svg>
+            Monthly Summary
+          </div>
+          <div class="kpi-grid" id="kpi-grid"></div>
+        </div>
+        <div class="sb-section">
+          <div class="sb-title">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21.21 15.89A10 10 0 1 1 8 2.83"/><path d="M22 12A10 10 0 0 0 12 2v10z"/></svg>
+            Airline Market Share (by Seats)
+          </div>
+          <div class="chart-wrap" style="height:180px"><canvas id="chart-market-share"></canvas></div>
+        </div>
+        <div class="sb-section">
+          <div class="sb-title">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+            Departure Distribution
+          </div>
+          <div class="chart-wrap" style="height:140px"><canvas id="chart-dep-hours"></canvas></div>
+        </div>
+        <div class="sb-section">
+          <div class="sb-title">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="4" width="18" height="18" rx="0"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>
+            Day-of-Week Pattern
+          </div>
+          <div class="chart-wrap" style="height:130px"><canvas id="chart-dow"></canvas></div>
+        </div>
+      </div>
+
+      <!-- ROUTES TAB -->
+      <div class="tab-panel" id="panel-routes">
+        <div class="sb-section">
+          <div class="sb-title">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.3-4.3"/></svg>
+            Search Routes
+          </div>
+          <input type="text" id="route-search" placeholder="Filter by airport code or name..."
+            style="width:100%;padding:8px 10px;border:1px solid var(--gray-300);font-size:12px;outline:none;background:var(--gray-50);">
+        </div>
+        <div class="sb-section" style="padding:0">
+          <div class="sb-title" style="padding:12px 16px 8px">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 6 7 17l-5-5"/><path d="m22 10-7.5 7.5L13 16"/></svg>
+            Active Routes — <span id="route-count-label" class="text-blue">0</span>
+          </div>
+          <div class="route-list" id="route-list"></div>
+        </div>
+      </div>
+
+      <!-- AIRLINES TAB -->
+      <div class="tab-panel" id="panel-airlines">
+        <div class="sb-section">
+          <div class="sb-title">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 20V10"/><path d="M12 20V4"/><path d="M6 20v-6"/></svg>
+            Airlines Operating This Month
+          </div>
+          <div id="airline-cards"></div>
+        </div>
+        <div class="sb-section">
+          <div class="sb-title">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 20V10"/><path d="M18 20V4"/><path d="M6 20v-16"/></svg>
+            Seats per Airline
+          </div>
+          <div class="chart-wrap" style="height:180px"><canvas id="chart-airline-seats"></canvas></div>
+        </div>
+        <div class="sb-section">
+          <div class="sb-title">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 3v18h18"/><path d="m19 9-5 5-4-4-3 3"/></svg>
+            Routes per Airline
+          </div>
+          <div class="chart-wrap" style="height:160px"><canvas id="chart-airline-routes"></canvas></div>
+        </div>
+      </div>
+
+      <!-- FLEET TAB -->
+      <div class="tab-panel" id="panel-fleet">
+        <div class="sb-section">
+          <div class="sb-title">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M17.8 19.2 16 11l3.5-3.5C21 6 21.5 4 21 3c-1-.5-3 0-4.5 1.5L13 8 4.8 6.2c-.5-.1-.9.1-1.1.5l-.3.5c-.2.4-.1.9.3 1.1l5.4 3.1-3.5 3.5-2.2-.7c-.3-.1-.7 0-.9.2l-.3.3c-.2.3-.1.7.1.9l2.8 2 2 2.8c.2.3.6.4.9.1l.3-.3c.3-.2.3-.6.2-.9l-.7-2.2 3.5-3.5 3.1 5.4c.2.4.7.5 1.1.3l.5-.3c.4-.2.6-.6.5-1.1z"/></svg>
+            Active Fleet This Month
+          </div>
+          <div id="fleet-table-wrap"></div>
+        </div>
+        <div class="sb-section">
+          <div class="sb-title">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21.21 15.89A10 10 0 1 1 8 2.83"/><path d="M22 12A10 10 0 0 0 12 2v10z"/></svg>
+            Seats by Aircraft Type
+          </div>
+          <div class="chart-wrap" style="height:200px"><canvas id="chart-fleet-seats"></canvas></div>
+        </div>
+      </div>
+
+      <!-- SCHEDULE TAB -->
+      <div class="tab-panel" id="panel-schedule">
+        <div class="sb-section">
+          <div class="sb-title">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+            Peak Departure Hours
+          </div>
+          <div class="chart-wrap" style="height:160px"><canvas id="chart-schedule-hours"></canvas></div>
+        </div>
+        <div class="sb-section">
+          <div class="sb-title">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 20V10"/><path d="M12 20V4"/><path d="M6 20v-6"/></svg>
+            Airline x Hour Breakdown
+          </div>
+          <div class="chart-wrap" style="height:200px"><canvas id="chart-airline-hours"></canvas></div>
+        </div>
+        <div class="sb-section">
+          <div class="sb-title">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 22c5.523 0 10-4.477 10-10S17.523 2 12 2 2 6.477 2 12s4.477 10 10 10z"/><path d="m9 12 2 2 4-4"/></svg>
+            Busiest Routes This Month
+          </div>
+          <div class="chart-wrap" style="height:200px"><canvas id="chart-busiest-routes"></canvas></div>
+        </div>
+      </div>
+    </div>
+  </aside>
+
+  <!-- Map -->
+  <div class="map-area">
+    <div id="map"></div>
+    <div class="map-info-bar" id="map-info-bar"></div>
+    <div class="map-detail" id="map-detail">
+      <div class="map-detail-header">
+        <h3 id="md-title">Route Detail</h3>
+        <button class="map-detail-close" onclick="closeMapDetail()">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 6 6 18"/><path d="m6 6 12 12"/></svg>
+        </button>
+      </div>
+      <div class="map-detail-body" id="md-body"></div>
+    </div>
+    <div class="map-legend" id="map-legend"></div>
+  </div>
+</div>
+
+<script>
+// ===============  GLOBALS  ===============
+let flights=[], airports=[], planes=[], planeMap={};
+let monthlyData = [];
+let currentMonth = { year: 2026, month: 3 };
+const MONTHS = [];
+let map, airportMarkers=[], routeLineMap={}, routeArcs=[];
+let chartsMap = {};
+let selectedRoute = null;
+
+const AIRLINE_COLORS = {
+  'Airlink': '#1d4ed8',
+  'Cemair': '#7c3aed',
+  'Safair': '#059669',
+  'Lift': '#db2777',
+  'SAA': '#d97706'
+};
+const AIRLINE_ORDER = ['Airlink','Safair','Cemair','Lift','SAA'];
+const BLUE_PALETTE = ['#1e3a5f','#1e40af','#2563eb','#3b82f6','#60a5fa','#93c5fd','#bfdbfe','#e2e8f0'];
+
+// ===============  CHART.JS DEFAULTS  ===============
+Chart.defaults.color = '#64748b';
+Chart.defaults.borderColor = '#e2e8f0';
+Chart.defaults.font.family = "-apple-system, BlinkMacSystemFont, 'Inter', sans-serif";
+Chart.defaults.font.size = 11;
+Chart.defaults.plugins.legend.labels.usePointStyle = true;
+Chart.defaults.plugins.legend.labels.boxWidth = 8;
+Chart.defaults.plugins.legend.labels.padding = 12;
+Chart.defaults.plugins.legend.labels.font = { size: 10, weight: '600' };
+
+// ===============  CSV PARSER  ===============
+function parseCSV(text) {
+  const lines = text.trim().split('\n');
+  const heads = lines[0].split(',');
+  return lines.slice(1).map(line => {
+    const v=[]; let cur='', inQ=false;
+    for (const ch of line) {
+      if (ch==='"') { inQ=!inQ; continue; }
+      if (ch===',' && !inQ) { v.push(cur.trim()); cur=''; continue; }
+      cur+=ch;
+    }
+    v.push(cur.trim());
+    const o={};
+    heads.forEach((h,i)=>o[h.trim()]=v[i]||'');
+    return o;
+  });
+}
+
+// ===============  DATA LOADING  ===============
+async function loadData() {
+  const [aText, pText, fText] = await Promise.all([
+    fetch('airports.csv').then(r=>r.text()),
+    fetch('planes.csv').then(r=>r.text()),
+    fetch('south-africa-flights.csv').then(r=>r.text())
+  ]);
+  airports = parseCSV(aText);
+  planes = parseCSV(pText);
+  flights = parseCSV(fText);
+
+  planes.forEach(p => planeMap[p.Plane] = +p.Passengers || 0);
+
+  flights.forEach(f => {
+    f.airline = f.airline_table_name;
+    f.route = f.dep_code + '-' + f.des_code;
+    f.routeBidi = [f.dep_code, f.des_code].sort().join('-');
+    const [dh,dm] = (f.deptime||'').split(':').map(Number);
+    const [ah,am] = (f.destime||'').split(':').map(Number);
+    f.depHour = dh||0;
+    f.depMin = (dh||0)*60+(dm||0);
+    f.arrMin = (ah||0)*60+(am||0);
+    f.durMin = f.arrMin - f.depMin;
+    if(f.durMin<0) f.durMin += 1440;
+    f.capacity = planeMap[f.aircraft] || 0;
+  });
+
+  // Generate month range from data
+  for(let y=2026; y<=2027; y++) {
+    const startM = y===2026 ? 3 : 1;
+    const endM = y===2027 ? 3 : 12;
+    for(let m=startM; m<=endM; m++) MONTHS.push({year:y, month:m});
+  }
+  currentMonth = {year:2026, month:3};
+
+  computeMonth();
+  initMap();
+  renderAll();
+  setupEvents();
+
+
+}
+
+// ===============  MONTHLY COMPUTATION (CORE ENGINE)  ===============
+function computeMonth() {
+  const {year, month} = currentMonth;
+  const mStart = new Date(year, month-1, 1);
+  const mEnd = new Date(year, month, 0); // last day of month
+  const dayKeys = ['su','mo','tu','we','th','fr','sa'];
+
+  monthlyData = [];
+  for (const f of flights) {
+    const from = new Date(f.datefrom + 'T00:00:00');
+    const to = new Date(f.dateto + 'T00:00:00');
+    const oStart = new Date(Math.max(from.getTime(), mStart.getTime()));
+    const oEnd = new Date(Math.min(to.getTime(), mEnd.getTime()));
+    if (oStart > oEnd) continue;
+
+    let opDays = 0;
+    const d = new Date(oStart);
+    while (d <= oEnd) {
+      if (f[dayKeys[d.getDay()]] === '1') opDays++;
+      d.setDate(d.getDate()+1);
+    }
+    if (opDays === 0) continue;
+
+    monthlyData.push({
+      ...f,
+      monthFlights: opDays,
+      monthSeats: opDays * f.capacity
+    });
+  }
+}
+
+// ===============  AGGREGATION HELPERS  ===============
+function aggByKey(arr, keyFn, valFn) {
+  const m={};
+  arr.forEach(d => { const k=keyFn(d); m[k]=(m[k]||0)+valFn(d); });
+  return m;
+}
+function aggByKeySet(arr, keyFn, valFn) {
+  const m={};
+  arr.forEach(d => { const k=keyFn(d); if(!m[k]) m[k]=new Set(); m[k].add(valFn(d)); });
+  return m;
+}
+function sortedEntries(obj, desc=true) {
+  return Object.entries(obj).sort((a,b)=>desc?b[1]-a[1]:a[1]-b[1]);
+}
+
+// ===============  MAP  ===============
+function initMap() {
+  map = L.map('map', {zoomControl:true}).setView([-29, 26], 6);
+  L.tileLayer('https://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}{r}.png', {
+    attribution:'OpenStreetMap, CARTO', maxZoom:18
+  }).addTo(map);
+}
+
+function renderMap() {
+  // Clear old layers
+  airportMarkers.forEach(m=>map.removeLayer(m));
+  airportMarkers=[];
+  routeArcs.forEach(l=>map.removeLayer(l));
+  routeArcs=[];
+  routeLineMap={};
+
+  const apMap={};
+  airports.forEach(a=>apMap[a.Code]=a);
+
+  // Route aggregation (bidirectional)
+  const routeSeats = {};
+  const routeFlights = {};
+  const routeDominant = {};
+
+  monthlyData.forEach(f => {
+    const k = f.routeBidi;
+    routeSeats[k] = (routeSeats[k]||0) + f.monthSeats;
+    routeFlights[k] = (routeFlights[k]||0) + f.monthFlights;
+    if(!routeDominant[k]) routeDominant[k] = {};
+    routeDominant[k][f.airline] = (routeDominant[k][f.airline]||0) + f.monthSeats;
+  });
+
+  const maxSeats = Math.max(...Object.values(routeSeats), 1);
+
+  // Draw routes
+  Object.entries(routeSeats).forEach(([key, seats]) => {
+    const [a,b] = key.split('-');
+    if(!apMap[a] || !apMap[b]) return;
+    const sa=apMap[a], sb=apMap[b];
+    const weight = Math.max(1.5, (seats/maxSeats)*10);
+    const opacity = Math.max(0.3, Math.min(0.8, seats/maxSeats + 0.2));
+
+    // Uniform route color
+    const color = '#2563eb';
+
+    const line = L.polyline([[+sa.Lat,+sa.Lon],[+sb.Lat,+sb.Lon]], {
+      color, weight, opacity
+    }).addTo(map);
+
+    line._origWeight = weight;
+    line._origOpacity = opacity;
+
+    line._routeKey = key;
+    line.on('click', () => onRouteClick(key));
+    line.on('mouseover', function(e) {
+      if(selectedRoute === key) return;
+      this.setStyle({weight: weight+3, opacity: selectedRoute ? 0.5 : 1});
+      this.bringToFront();
+      const tip = `${a} - ${b}: ${seats.toLocaleString()} seats, ${routeFlights[key].toLocaleString()} flights`;
+      this.bindTooltip(tip, {sticky:true}).openTooltip(e.latlng);
+    });
+    line.on('mouseout', function() {
+      this.closeTooltip();
+      if(selectedRoute === key) return;
+      if(selectedRoute) { this.setStyle({opacity:0.08, weight: this._origWeight}); return; }
+      this.setStyle({weight: this._origWeight, opacity: this._origOpacity});
+    });
+    routeLineMap[key] = line;
+    routeArcs.push(line);
+  });
+
+  // Airport markers
+  const apFlights = {};
+  const apSeats = {};
+  monthlyData.forEach(f => {
+    apFlights[f.dep_code] = (apFlights[f.dep_code]||0) + f.monthFlights;
+    apFlights[f.des_code] = (apFlights[f.des_code]||0) + f.monthFlights;
+    apSeats[f.dep_code] = (apSeats[f.dep_code]||0) + f.monthSeats;
+    apSeats[f.des_code] = (apSeats[f.des_code]||0) + f.monthSeats;
+  });
+  const maxApSeats = Math.max(...Object.values(apSeats), 1);
+
+  airports.forEach(a => {
+    const s = apSeats[a.Code]||0;
+    const fl = apFlights[a.Code]||0;
+    if(fl===0) return;
+    const r = Math.max(8, Math.min(16, (s/maxApSeats)*16));
+
+    const marker = L.circleMarker([+a.Lat, +a.Lon], {
+      radius: r,
+      fillColor: '#1e40af',
+      fillOpacity: 1,
+      color: '#111',
+      weight: 1
+    }).addTo(map);
+
+    marker.on('click', () => openAirportDetail(a.Code));
+    marker.bindTooltip(`${a.Code} - ${a.Airport}`, {direction:'top',offset:[0,-r]});
+    marker.bringToFront();
+    airportMarkers.push(marker);
+  });
+
+  // Map info chips
+  const totalFlights = monthlyData.reduce((s,f)=>s+f.monthFlights,0);
+  const totalSeats = monthlyData.reduce((s,f)=>s+f.monthSeats,0);
+  const activeRoutes = Object.keys(routeSeats).length;
+  const activeAirports = new Set([...monthlyData.map(f=>f.dep_code),...monthlyData.map(f=>f.des_code)]).size;
+
+  document.getElementById('map-info-bar').innerHTML = `
+    <div class="map-chip">
+      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M17.8 19.2 16 11l3.5-3.5C21 6 21.5 4 21 3c-1-.5-3 0-4.5 1.5L13 8 4.8 6.2c-.5-.1-.9.1-1.1.5l-.3.5c-.2.4-.1.9.3 1.1l5.4 3.1-3.5 3.5-2.2-.7c-.3-.1-.7 0-.9.2l-.3.3c-.2.3-.1.7.1.9l2.8 2 2 2.8c.2.3.6.4.9.1l.3-.3c.3-.2.3-.6.2-.9l-.7-2.2 3.5-3.5 3.1 5.4c.2.4.7.5 1.1.3l.5-.3c.4-.2.6-.6.5-1.1z"/></svg>
+      <span class="chip-val">${totalFlights.toLocaleString()}</span> flights
+    </div>
+    <div class="map-chip">
+      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/></svg>
+      <span class="chip-val">${totalSeats.toLocaleString()}</span> seats
+    </div>
+    <div class="map-chip">
+      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 6 7 17l-5-5"/></svg>
+      <span class="chip-val">${activeRoutes}</span> routes
+    </div>
+    <div class="map-chip">
+      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="10" r="3"/><path d="M12 21.7C17.3 17 20 13 20 10a8 8 0 1 0-16 0c0 3 2.7 7 8 11.7z"/></svg>
+      <span class="chip-val">${activeAirports}</span> airports
+    </div>
+  `;
+
+  // Legend
+  document.getElementById('map-legend').innerHTML = `
+    <h4>Line Thickness = Seat Capacity</h4>
+    <div class="legend-item"><div class="legend-swatch" style="background:#2563eb;height:2px"></div>Low capacity</div>
+    <div class="legend-item"><div class="legend-swatch" style="background:#2563eb;height:4px"></div>Medium capacity</div>
+    <div class="legend-item"><div class="legend-swatch" style="background:#2563eb;height:7px"></div>High capacity</div>
+  `;
+
+  // Update header stats
+  document.querySelector('#hdr-flights .header-stat-value').textContent = totalFlights.toLocaleString();
+  document.querySelector('#hdr-seats .header-stat-value').textContent = totalSeats.toLocaleString();
+  document.querySelector('#hdr-routes .header-stat-value').textContent = activeRoutes;
+}
+
+// ===============  ROUTE DETAIL PANEL  ===============
+function openRouteDetail(bidiKey) {
+  const panel = document.getElementById('map-detail');
+  panel.classList.add('active');
+  document.getElementById('map-legend').style.display = 'none';
+
+  const [a,b] = bidiKey.split('-');
+  const apMap={};
+  airports.forEach(ap=>apMap[ap.Code]=ap);
+  const nameA = apMap[a]?.Airport||a;
+  const nameB = apMap[b]?.Airport||b;
+
+  const rf = monthlyData.filter(f => f.routeBidi === bidiKey);
+  const totalSeats = rf.reduce((s,f)=>s+f.monthSeats,0);
+  const totalFlights = rf.reduce((s,f)=>s+f.monthFlights,0);
+
+  // Airline breakdown
+  const airlineSeats = {};
+  const airlineFlights = {};
+  const airlineAircraft = {};
+  rf.forEach(f => {
+    airlineSeats[f.airline] = (airlineSeats[f.airline]||0) + f.monthSeats;
+    airlineFlights[f.airline] = (airlineFlights[f.airline]||0) + f.monthFlights;
+    if(!airlineAircraft[f.airline]) airlineAircraft[f.airline] = new Set();
+    airlineAircraft[f.airline].add(f.aircraft);
+  });
+  const sortedAirlines = Object.entries(airlineSeats).sort((x,y)=>y[1]-x[1]);
+  const avgDur = rf.length ? Math.round(rf.reduce((s,f)=>s+f.durMin,0)/rf.length) : 0;
+
+  // Direction breakdown
+  const dirA = rf.filter(f=>f.dep_code===a);
+  const dirB = rf.filter(f=>f.dep_code===b);
+
+  document.getElementById('md-title').textContent = `${a} - ${b}`;
+  document.getElementById('md-body').innerHTML = `
+    <div style="margin-bottom:12px">
+      <div style="font-size:12px;color:var(--gray-500)">${nameA} - ${nameB}</div>
+    </div>
+
+    <div class="kpi-grid" style="margin-bottom:14px">
+      <div class="kpi-card">
+        <div class="kpi-value">${totalSeats.toLocaleString()}</div>
+        <div class="kpi-label">Monthly Seats</div>
+      </div>
+      <div class="kpi-card">
+        <div class="kpi-value">${totalFlights.toLocaleString()}</div>
+        <div class="kpi-label">Monthly Flights</div>
+      </div>
+      <div class="kpi-card">
+        <div class="kpi-value">${sortedAirlines.length}</div>
+        <div class="kpi-label">Airlines</div>
+      </div>
+      <div class="kpi-card">
+        <div class="kpi-value">${avgDur}m</div>
+        <div class="kpi-label">Avg Duration</div>
+      </div>
+    </div>
+
+    <div class="sb-title">
+      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M2 20h.01"/><path d="M7 20v-4"/><path d="M12 20v-8"/><path d="M17 20V8"/><path d="M22 4v16"/></svg>
+      Market Dominance (by seats)
+    </div>
+    ${sortedAirlines.map(([al, seats]) => {
+      const pct = totalSeats ? Math.round(seats/totalSeats*100) : 0;
+      const fl = airlineFlights[al]||0;
+      const ac = airlineAircraft[al] ? [...airlineAircraft[al]].join(', ') : '';
+      return `
+        <div class="dominance-row">
+          <div class="dominance-airline">${al}</div>
+          <div class="dominance-bar-wrap" style="min-width:60px;">
+            <div class="dominance-bar-fill" style="width:${pct}%;background:${AIRLINE_COLORS[al]||'#3b82f6'}">${pct >= 18 ? `${pct}%` : ''}</div>
+            ${pct < 18 ? `<span class='dominance-bar-num'>${pct}%</span>` : ''}
+          </div>
+          <div class="dominance-seats">${seats.toLocaleString()}</div>
+        </div>
+        <div style="font-size:10px;color:var(--gray-400);margin:-4px 0 8px 68px">${fl} flights / ${ac}</div>
+      `;
+    }).join('')}
+
+    <div class="sb-title mt-12">
+      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="m18 15-6-6-6 6"/></svg>
+      Direction Breakdown
+    </div>
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px">
+      <div class="kpi-card">
+        <div style="font-size:11px;font-weight:700;color:var(--blue-700);margin-bottom:4px">${a} > ${b}</div>
+        <div style="font-size:10px;color:var(--gray-500)">${dirA.reduce((s,f)=>s+f.monthFlights,0)} flights</div>
+        <div style="font-size:10px;color:var(--gray-500)">${dirA.reduce((s,f)=>s+f.monthSeats,0).toLocaleString()} seats</div>
+      </div>
+      <div class="kpi-card">
+        <div style="font-size:11px;font-weight:700;color:var(--blue-700);margin-bottom:4px">${b} > ${a}</div>
+        <div style="font-size:10px;color:var(--gray-500)">${dirB.reduce((s,f)=>s+f.monthFlights,0)} flights</div>
+        <div style="font-size:10px;color:var(--gray-500)">${dirB.reduce((s,f)=>s+f.monthSeats,0).toLocaleString()} seats</div>
+      </div>
+    </div>
+  `;
+}
+
+function closeMapDetail() {
+  document.getElementById('map-detail').classList.remove('active');
+  document.getElementById('map-legend').style.display = '';
+  resetMapHighlight();
+}
+
+// ===============  AIRPORT DETAIL PANEL  ===============
+function openAirportDetail(code) {
+  const panel = document.getElementById('map-detail');
+  panel.classList.add('active');
+  document.getElementById('map-legend').style.display = 'none';
+
+  const apMap={};
+  airports.forEach(ap=>apMap[ap.Code]=ap);
+  const ap = apMap[code];
+  const name = ap?.Airport || code;
+
+  // All flights from/to this airport
+  const af = monthlyData.filter(f => f.dep_code===code || f.des_code===code);
+  const totalSeats = af.reduce((s,f)=>s+f.monthSeats,0);
+  const totalFlights = af.reduce((s,f)=>s+f.monthFlights,0);
+  const airlines = new Set(af.map(f=>f.airline));
+
+  // Destination breakdown
+  const destData = {};
+  af.forEach(f => {
+    const dest = f.dep_code===code ? f.des_code : f.dep_code;
+    if(!destData[dest]) destData[dest] = {seats:0, flights:0, airlines:new Set()};
+    destData[dest].seats += f.monthSeats;
+    destData[dest].flights += f.monthFlights;
+    destData[dest].airlines.add(f.airline);
+  });
+  const sortedDests = Object.entries(destData).sort((a,b)=>b[1].seats-a[1].seats);
+  const maxDestSeats = sortedDests.length ? sortedDests[0][1].seats : 1;
+
+  // Airline breakdown at this airport
+  const alSeats = {};
+  af.forEach(f => { alSeats[f.airline] = (alSeats[f.airline]||0) + f.monthSeats; });
+  const sortedAl = Object.entries(alSeats).sort((a,b)=>b[1]-a[1]);
+
+  // Highlight connected routes
+  Object.values(routeLineMap).forEach(l => l.setStyle({opacity:0.06}));
+  sortedDests.forEach(([dest]) => {
+    const k = [code, dest].sort().join('-');
+    if(routeLineMap[k]) routeLineMap[k].setStyle({opacity:1, weight: routeLineMap[k]._origWeight + 3});
+  });
+
+  document.getElementById('md-title').textContent = `${code} - ${name}`;
+  document.getElementById('md-body').innerHTML = `
+    <div class="kpi-grid" style="margin-bottom:14px">
+      <div class="kpi-card">
+        <div class="kpi-value">${totalSeats.toLocaleString()}</div>
+        <div class="kpi-label">Monthly Seats</div>
+      </div>
+      <div class="kpi-card">
+        <div class="kpi-value">${totalFlights.toLocaleString()}</div>
+        <div class="kpi-label">Monthly Flights</div>
+      </div>
+      <div class="kpi-card">
+        <div class="kpi-value">${sortedDests.length}</div>
+        <div class="kpi-label">Destinations</div>
+      </div>
+      <div class="kpi-card">
+        <div class="kpi-value">${airlines.size}</div>
+        <div class="kpi-label">Airlines</div>
+      </div>
+    </div>
+
+    <div class="sb-title">
+      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="10" r="3"/><path d="M12 21.7C17.3 17 20 13 20 10a8 8 0 1 0-16 0c0 3 2.7 7 8 11.7z"/></svg>
+      Destinations (by seats)
+    </div>
+    ${sortedDests.map(([dest, d]) => {
+      const pct = Math.round(d.seats/maxDestSeats*100);
+      const destName = apMap[dest]?.Airport || dest;
+      return `
+        <div class="dominance-row" style="cursor:pointer" onclick="onRouteClick('${[code,dest].sort().join('-')}')">
+          <div class="dominance-airline" style="min-width:40px">${dest}</div>
+          <div class="dominance-bar-wrap" style="min-width:60px;">
+            <div class="dominance-bar-fill" style="width:${pct}%;background:#2563eb">${pct >= 18 ? d.seats.toLocaleString() : ''}</div>
+            ${pct < 18 ? `<span class='dominance-bar-num'>${d.seats.toLocaleString()}</span>` : ''}
+          </div>
+        </div>
+        <div style="font-size:10px;color:var(--gray-400);margin:-4px 0 8px 48px">${destName} / ${d.flights} flights / ${[...d.airlines].join(', ')}</div>
+      `;
+    }).join('')}
+
+    <div class="sb-title mt-12">
+      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M2 20h.01"/><path d="M7 20v-4"/><path d="M12 20v-8"/><path d="M17 20V8"/><path d="M22 4v16"/></svg>
+      Airlines at ${code}
+    </div>
+    ${sortedAl.map(([al, seats]) => {
+      const pct = totalSeats ? Math.round(seats/totalSeats*100) : 0;
+      return `
+        <div class="dominance-row">
+          <div class="dominance-airline">${al}</div>
+          <div class="dominance-bar-wrap" style="min-width:60px;">
+            <div class="dominance-bar-fill" style="width:${pct}%;background:${AIRLINE_COLORS[al]||'#3b82f6'}">${pct >= 18 ? `${pct}%` : ''}</div>
+            ${pct < 18 ? `<span class='dominance-bar-num'>${pct}%</span>` : ''}
+          </div>
+          <div class="dominance-seats">${seats.toLocaleString()}</div>
+        </div>
+      `;
+    }).join('')}
+  `;
+}
+
+// ===============  SIDEBAR: OVERVIEW  ===============
+function renderOverview() {
+  const totalFlights = monthlyData.reduce((s,f)=>s+f.monthFlights,0);
+  const totalSeats = monthlyData.reduce((s,f)=>s+f.monthSeats,0);
+  const activeRoutes = new Set(monthlyData.map(f=>f.routeBidi)).size;
+  const dirRoutes = new Set(monthlyData.map(f=>f.route)).size;
+  const activeAirlines = new Set(monthlyData.map(f=>f.airline)).size;
+  const activeAirports = new Set([...monthlyData.map(f=>f.dep_code),...monthlyData.map(f=>f.des_code)]).size;
+  const acTypes = new Set(monthlyData.map(f=>f.aircraft)).size;
+  const avgCap = totalFlights ? Math.round(totalSeats/totalFlights) : 0;
+
+  // Route with most airline competition
+  const routeAirlines = aggByKeySet(monthlyData, f=>f.routeBidi, f=>f.airline);
+  const mostCompeted = Object.entries(routeAirlines).sort((a,b)=>b[1].size-a[1].size)[0];
+
+  document.getElementById('kpi-grid').innerHTML = `
+    <div class="kpi-card">
+      <div class="kpi-value">${totalFlights.toLocaleString()}</div>
+      <div class="kpi-label">Total Flights</div>
+      <div class="kpi-sub">${dirRoutes} directional routes</div>
+    </div>
+    <div class="kpi-card">
+      <div class="kpi-value">${totalSeats.toLocaleString()}</div>
+      <div class="kpi-label">Total Seats</div>
+      <div class="kpi-sub">offered this month</div>
+    </div>
+    <div class="kpi-card">
+      <div class="kpi-value">${activeRoutes}</div>
+      <div class="kpi-label">Route Pairs</div>
+      <div class="kpi-sub">${activeAirports} airports</div>
+    </div>
+    <div class="kpi-card">
+      <div class="kpi-value">${activeAirlines}</div>
+      <div class="kpi-label">Airlines</div>
+      <div class="kpi-sub">${acTypes} aircraft types</div>
+    </div>
+    <div class="kpi-card">
+      <div class="kpi-value">${avgCap}</div>
+      <div class="kpi-label">Avg Seats/Flight</div>
+      <div class="kpi-sub">capacity per departure</div>
+    </div>
+    <div class="kpi-card">
+      <div class="kpi-value">${mostCompeted ? mostCompeted[1].size : 0}</div>
+      <div class="kpi-label">Max Competition</div>
+      <div class="kpi-sub">${mostCompeted ? mostCompeted[0] : '--'}</div>
+    </div>
+  `;
+
+  // Airline market share doughnut
+  const alSeats = aggByKey(monthlyData, f=>f.airline, f=>f.monthSeats);
+  const alSorted = AIRLINE_ORDER.filter(a=>alSeats[a]);
+  renderChart('chart-market-share', 'doughnut', {
+    labels: alSorted,
+    datasets:[{
+      data: alSorted.map(a=>alSeats[a]),
+      backgroundColor: alSorted.map(a=>AIRLINE_COLORS[a]),
+      borderWidth: 0
+    }]
+  }, {
+    cutout: '62%',
+    plugins: { legend:{position:'right',labels:{padding:8}} }
+  });
+
+  // Departure hours bar
+  const hours = Array(24).fill(0);
+  monthlyData.forEach(f => hours[f.depHour] += f.monthFlights);
+  renderChart('chart-dep-hours', 'bar', {
+    labels: Array.from({length:24},(_,i)=>i),
+    datasets:[{
+      data: hours,
+      backgroundColor: '#2563eb',
+      borderWidth: 0, barPercentage: 0.9, categoryPercentage: 0.95
+    }]
+  }, {
+    plugins:{legend:{display:false}},
+    scales:{x:{title:{display:true,text:'Hour',font:{size:10}},grid:{display:false}},y:{beginAtZero:true,grid:{color:'#f1f5f9'}}}
+  });
+
+  // Day of week bar
+  const dayNames=['Sun','Mon','Tue','Wed','Thu','Fri','Sat'];
+  const dayKeys=['su','mo','tu','we','th','fr','sa'];
+  const {year,month} = currentMonth;
+  const mStart = new Date(year,month-1,1);
+  const mEnd = new Date(year,month,0);
+  const dayOfWeekCounts = Array(7).fill(0);
+  monthlyData.forEach(f => {
+    const from = new Date(f.datefrom+'T00:00:00');
+    const to = new Date(f.dateto+'T00:00:00');
+    const oS = new Date(Math.max(from.getTime(),mStart.getTime()));
+    const oE = new Date(Math.min(to.getTime(),mEnd.getTime()));
+    const d = new Date(oS);
+    while(d<=oE){
+      if(f[dayKeys[d.getDay()]]==='1') dayOfWeekCounts[d.getDay()]++;
+      d.setDate(d.getDate()+1);
+    }
+  });
+  renderChart('chart-dow', 'bar', {
+    labels: dayNames,
+    datasets:[{
+      data: dayOfWeekCounts,
+      backgroundColor: dayOfWeekCounts.map((v,i)=>i===0||i===6?'#93c5fd':'#1d4ed8'),
+      borderWidth: 0, barPercentage: 0.7
+    }]
+  }, {
+    plugins:{legend:{display:false}},
+    scales:{x:{grid:{display:false}},y:{beginAtZero:true,grid:{color:'#f1f5f9'}}}
+  });
+}
+
+// ===============  SIDEBAR: ROUTES  ===============
+function renderRoutes(filter) {
+  filter = filter || '';
+  const routeSeats = {};
+  const routeFlights = {};
+  const routeAirlines = {};
+
+  monthlyData.forEach(f => {
+    const k = f.routeBidi;
+    routeSeats[k] = (routeSeats[k]||0) + f.monthSeats;
+    routeFlights[k] = (routeFlights[k]||0) + f.monthFlights;
+    if(!routeAirlines[k]) routeAirlines[k] = {};
+    routeAirlines[k][f.airline] = (routeAirlines[k][f.airline]||0) + f.monthSeats;
+  });
+
+  let routes = Object.entries(routeSeats).sort((a,b)=>b[1]-a[1]);
+  if (filter) {
+    const q = filter.toLowerCase();
+    const apMap={};
+    airports.forEach(a=>apMap[a.Code]=a);
+    routes = routes.filter(([k]) => {
+      const [a,b] = k.split('-');
+      return a.toLowerCase().includes(q) || b.toLowerCase().includes(q) ||
+        (apMap[a]?.Airport||'').toLowerCase().includes(q) ||
+        (apMap[b]?.Airport||'').toLowerCase().includes(q);
+    });
+  }
+
+  document.getElementById('route-count-label').textContent = routes.length;
+
+  document.getElementById('route-list').innerHTML = routes.map(([key, seats]) => {
+    const fl = routeFlights[key];
+    const als = routeAirlines[key];
+    const total = seats || 1;
+    const segs = Object.entries(als).sort((a,b)=>b[1]-a[1]).map(([al,s]) =>
+      `<div class="route-bar-seg" style="width:${s/total*100}%;background:${AIRLINE_COLORS[al]||'#3b82f6'}"></div>`
+    ).join('');
+    return `
+      <div class="route-item" data-route="${key}" onclick="onRouteClick('${key}')">
+        <div class="route-codes">${key}</div>
+        <div class="route-bar-wrap">
+          <div class="route-bar">${segs}</div>
+        </div>
+        <div class="route-meta">
+          <strong>${seats.toLocaleString()}</strong>
+          ${fl} flights
+        </div>
+      </div>
+    `;
+  }).join('');
+}
+
+function onRouteClick(bidiKey) {
+  selectedRoute = bidiKey;
+  // Highlight route on map - dim all others, make selected solid and bold
+  Object.values(routeLineMap).forEach(l => l.setStyle({opacity:0.08, weight: l._origWeight}));
+  if (routeLineMap[bidiKey]) {
+    routeLineMap[bidiKey].setStyle({opacity:1, weight: routeLineMap[bidiKey]._origWeight + 4});
+    routeLineMap[bidiKey].bringToFront();
+  }
+  // Highlight in sidebar list
+  document.querySelectorAll('.route-item').forEach(el => el.classList.remove('selected'));
+  document.querySelector(`.route-item[data-route="${bidiKey}"]`)?.classList.add('selected');
+  // Open detail panel
+  openRouteDetail(bidiKey);
+  // Zoom to route
+  const [a,b] = bidiKey.split('-');
+  const apMap={};
+  airports.forEach(ap=>apMap[ap.Code]=ap);
+  if(apMap[a]&&apMap[b]){
+    map.fitBounds([[+apMap[a].Lat,+apMap[a].Lon],[+apMap[b].Lat,+apMap[b].Lon]],{padding:[80,80]});
+  }
+}
+
+// ===============  SIDEBAR: AIRLINES  ===============
+function renderAirlines() {
+  const alSeats = aggByKey(monthlyData, f=>f.airline, f=>f.monthSeats);
+  const alFlights = aggByKey(monthlyData, f=>f.airline, f=>f.monthFlights);
+  const alRoutes = aggByKeySet(monthlyData, f=>f.airline, f=>f.routeBidi);
+  const totalSeats = monthlyData.reduce((s,f)=>s+f.monthSeats,0);
+  const sortedAl = Object.entries(alSeats).sort((a,b)=>b[1]-a[1]);
+
+  document.getElementById('airline-cards').innerHTML = sortedAl.map(([al, seats]) => {
+    const pct = totalSeats ? (seats/totalSeats*100).toFixed(1) : 0;
+    return `
+      <div class="airline-card" onclick="filterMapByAirline('${al}', this)">
+        <div class="airline-header">
+          <div class="airline-name" style="color:${AIRLINE_COLORS[al]||'#333'}">${al}</div>
+          <div class="airline-code" style="border-color:${AIRLINE_COLORS[al]||'#ccc'};color:${AIRLINE_COLORS[al]||'#333'}">${pct}% share</div>
+        </div>
+        <div class="airline-stats">
+          <div class="airline-stat"><div class="airline-stat-val">${seats.toLocaleString()}</div><div class="airline-stat-lbl">Seats</div></div>
+          <div class="airline-stat"><div class="airline-stat-val">${(alFlights[al]||0).toLocaleString()}</div><div class="airline-stat-lbl">Flights</div></div>
+          <div class="airline-stat"><div class="airline-stat-val">${alRoutes[al]?.size||0}</div><div class="airline-stat-lbl">Routes</div></div>
+        </div>
+      </div>
+    `;
+  }).join('');
+
+  // Seats horizontal bar chart
+  renderChart('chart-airline-seats', 'bar', {
+    labels: sortedAl.map(a=>a[0]),
+    datasets:[{
+      label: 'Seats',
+      data: sortedAl.map(a=>a[1]),
+      backgroundColor: sortedAl.map(a=>AIRLINE_COLORS[a[0]]||'#3b82f6'),
+      borderWidth: 0, barPercentage: 0.7
+    }]
+  }, {
+    indexAxis:'y',
+    plugins:{legend:{display:false}},
+    scales:{x:{beginAtZero:true,grid:{color:'#f1f5f9'}},y:{grid:{display:false}}}
+  });
+
+  // Routes per airline
+  const alr = sortedAl.map(([al])=>[al, alRoutes[al]?.size||0]).sort((a,b)=>b[1]-a[1]);
+  renderChart('chart-airline-routes', 'bar', {
+    labels: alr.map(a=>a[0]),
+    datasets:[{
+      label: 'Routes',
+      data: alr.map(a=>a[1]),
+      backgroundColor: alr.map(a=>AIRLINE_COLORS[a[0]]||'#3b82f6'),
+      borderWidth: 0, barPercentage: 0.7
+    }]
+  }, {
+    indexAxis:'y',
+    plugins:{legend:{display:false}},
+    scales:{x:{beginAtZero:true,grid:{color:'#f1f5f9'}},y:{grid:{display:false}}}
+  });
+}
+
+let activeAirlineFilter = null;
+function filterMapByAirline(airline, el) {
+  if(activeAirlineFilter === airline) {
+    resetMapHighlight();
+    activeAirlineFilter = null;
+    document.querySelectorAll('.airline-card').forEach(c=>c.classList.remove('selected'));
+    return;
+  }
+  activeAirlineFilter = airline;
+  const rf = monthlyData.filter(f=>f.airline===airline);
+  const alRoutes = new Set(rf.map(f=>f.routeBidi));
+  Object.entries(routeLineMap).forEach(([key,line]) => {
+    if(alRoutes.has(key)) line.setStyle({opacity:0.8, weight: line._origWeight+1});
+    else line.setStyle({opacity:0.05, weight: 1});
+  });
+  document.querySelectorAll('.airline-card').forEach(c=>c.classList.remove('selected'));
+  if(el) el.classList.add('selected');
+}
+
+// ===============  SIDEBAR: FLEET  ===============
+function renderFleet() {
+  const acSeats = aggByKey(monthlyData, f=>f.aircraft, f=>f.monthSeats);
+  const acFlights = aggByKey(monthlyData, f=>f.aircraft, f=>f.monthFlights);
+
+  const sorted = Object.entries(acSeats).sort((a,b)=>b[1]-a[1]);
+  const maxS = sorted.length ? sorted[0][1] : 1;
+
+  document.getElementById('fleet-table-wrap').innerHTML = `
+    <table class="fleet-table">
+      <thead><tr><th>Aircraft</th><th>Cap</th><th>Flights</th><th>Seats Offered</th></tr></thead>
+      <tbody>${sorted.map(([ac, seats], idx) => {
+        const cap = planeMap[ac]||0;
+        const fl = acFlights[ac]||0;
+        const pct = Math.round(seats/maxS*100);
+        return `
+          <tr class="fleet-row-anim" style="animation-delay:${(idx*0.04).toFixed(2)}s">
+            <td style="font-weight:700;font-size:11px;max-width:130px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap" title="${ac}">${ac}</td>
+            <td style="color:var(--blue-700);font-weight:800">${cap}</td>
+            <td>${fl.toLocaleString()}</td>
+            <td>
+              <div style="display:flex;align-items:center;gap:6px">
+                <div class="cap-bar" style="flex:1"><div class="cap-bar-fill" style="width:${pct}%"></div></div>
+                <span style="font-size:10px;font-weight:700;min-width:40px;text-align:right">${seats.toLocaleString()}</span>
+              </div>
+            </td>
+          </tr>
+        `;
+      }).join('')}</tbody>
+    </table>
+  `;
+
+  // Aircraft type doughnut
+  const top8 = sorted.slice(0,8);
+  renderChart('chart-fleet-seats', 'doughnut', {
+    labels: top8.map(a => a[0].length>22 ? a[0].slice(0,22)+'..':a[0]),
+    datasets:[{
+      data: top8.map(a=>a[1]),
+      backgroundColor: BLUE_PALETTE,
+      borderWidth: 1, borderColor: '#fff'
+    }]
+  }, {
+    cutout: '55%',
+    plugins: {legend:{position:'bottom',labels:{padding:6,font:{size:9}}}}
+  });
+}
+
+// ===============  SIDEBAR: SCHEDULE  ===============
+function renderSchedule() {
+  // Overall hourly distribution
+  const hourlyAll = Array(24).fill(0);
+  monthlyData.forEach(f => hourlyAll[f.depHour] += f.monthFlights);
+  renderChart('chart-schedule-hours', 'bar', {
+    labels: Array.from({length:24},(_,i)=>String(i).padStart(2,'0')),
+    datasets: [{
+      label: 'Flights',
+      data: hourlyAll,
+      backgroundColor: '#1e40af',
+      borderWidth: 0, barPercentage: 0.9, categoryPercentage: 0.95
+    }]
+  }, {
+    plugins:{legend:{display:false}},
+    scales:{x:{grid:{display:false},title:{display:true,text:'Departure Hour',font:{size:10}}},y:{beginAtZero:true,grid:{color:'#f1f5f9'}}}
+  });
+
+  // Stacked airline x hour
+  const airlines = [...new Set(monthlyData.map(f=>f.airline))].sort();
+  const datasets = airlines.map(al => {
+    const h = Array(24).fill(0);
+    monthlyData.filter(f=>f.airline===al).forEach(f => h[f.depHour] += f.monthFlights);
+    return {
+      label: al, data: h,
+      backgroundColor: AIRLINE_COLORS[al]||'#3b82f6',
+      borderWidth: 0, barPercentage: 0.85, categoryPercentage: 0.9
+    };
+  });
+  renderChart('chart-airline-hours', 'bar', {
+    labels: Array.from({length:24},(_,i)=>String(i).padStart(2,'0')),
+    datasets
+  }, {
+    plugins:{legend:{position:'bottom'}},
+    scales:{x:{stacked:true,grid:{display:false}},y:{stacked:true,beginAtZero:true,grid:{color:'#f1f5f9'}}}
+  });
+
+  // Busiest directional routes
+  const routeF = aggByKey(monthlyData, f=>f.route, f=>f.monthFlights);
+  const topR = sortedEntries(routeF).slice(0,10);
+  renderChart('chart-busiest-routes', 'bar', {
+    labels: topR.map(r=>r[0]),
+    datasets:[{
+      data: topR.map(r=>r[1]),
+      backgroundColor: '#2563eb',
+      borderWidth: 0, barPercentage: 0.7
+    }]
+  }, {
+    indexAxis:'y',
+    plugins:{legend:{display:false}},
+    scales:{x:{beginAtZero:true,grid:{color:'#f1f5f9'}},y:{grid:{display:false}}}
+  });
+}
+
+// ===============  CHART HELPER  ===============
+function renderChart(id, type, data, options) {
+  options = options || {};
+  if(chartsMap[id]) chartsMap[id].destroy();
+  const ctx = document.getElementById(id);
+  if(!ctx) return;
+  chartsMap[id] = new Chart(ctx, {
+    type, data,
+    options: {
+      responsive: true,
+      maintainAspectRatio: false,
+      animation: { duration: 400 },
+      ...options
+    }
+  });
+}
+
+// ===============  RENDER ALL  ===============
+function renderAll() {
+  const mNames = ['','January','February','March','April','May','June','July','August','September','October','November','December'];
+  document.getElementById('month-label').textContent = `${mNames[currentMonth.month]} ${currentMonth.year}`;
+
+  renderMap();
+  renderOverview();
+  renderRoutes();
+  renderAirlines();
+  renderFleet();
+  renderSchedule();
+  closeMapDetail();
+  activeAirlineFilter = null;
+}
+
+// ===============  EVENTS  ===============
+function setupEvents() {
+  // Tab switching
+  document.querySelectorAll('.sidebar-tab').forEach(tab => {
+    tab.addEventListener('click', () => {
+      document.querySelectorAll('.sidebar-tab').forEach(t=>t.classList.remove('active'));
+      document.querySelectorAll('.tab-panel').forEach(p=>p.classList.remove('active'));
+      tab.classList.add('active');
+      document.getElementById('panel-'+tab.dataset.tab).classList.add('active');
+    });
+  });
+
+  // Month navigation
+  document.getElementById('month-prev').addEventListener('click', () => changeMonth(-1));
+  document.getElementById('month-next').addEventListener('click', () => changeMonth(1));
+
+  // Route search
+  document.getElementById('route-search').addEventListener('input', e => {
+    renderRoutes(e.target.value);
+  });
+
+  // Keyboard shortcuts
+  document.addEventListener('keydown', e => {
+    if(e.target.tagName==='INPUT') return;
+    if(e.key==='ArrowLeft') changeMonth(-1);
+    if(e.key==='ArrowRight') changeMonth(1);
+    if(e.key==='Escape') { closeMapDetail(); resetMapHighlight(); }
+  });
+}
+
+function changeMonth(dir) {
+  const idx = MONTHS.findIndex(m=>m.year===currentMonth.year && m.month===currentMonth.month);
+  const newIdx = idx + dir;
+  if(newIdx<0 || newIdx>=MONTHS.length) return;
+  currentMonth = MONTHS[newIdx];
+  computeMonth();
+  renderAll();
+}
+
+function resetMapHighlight() {
+  selectedRoute = null;
+  Object.entries(routeLineMap).forEach(([key,line]) => {
+    line.setStyle({opacity: line._origOpacity, weight: line._origWeight});
+  });
+  document.querySelectorAll('.route-item').forEach(el=>el.classList.remove('selected'));
+  document.querySelectorAll('.airline-card').forEach(el=>el.classList.remove('selected'));
+}
+
+// ===============  INIT  ===============
+loadData();
+</script>
+</body>
+</html>
