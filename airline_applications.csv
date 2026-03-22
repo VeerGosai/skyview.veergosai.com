@@ -1,0 +1,181 @@
+Airline,Route,Airport Code 1,Airport Code 2,Description,Gazette Date,Application Type,Class,Licence Type,Source Document
+Precision Drone Services,Domestic,,,New application - Class III - RPAS operations (Type G2/G3/G4/G7/G8/G10/G13/G16),Jan 2025,New Application,Class III,Domestic,FEB25.pdf
+Som Surveys,Domestic,,,New application - Class III - RPAS operations (Type G2-G16),Jan 2025,New Application,Class III,Domestic,FEB25.pdf
+Garden Route Media,Domestic,,,Amendment - Class III - RPAS (Type G2/G3/G4/G5/G8/G13/G16) - Personnel change,Jan 2025,Amendment,Class III,Domestic,FEB25.pdf
+Zephyr Solutions (Corporate Aviation Management Services),Domestic,,,Amendment - Class III - Name change from Drone Imaging Solutions; personnel change (Type G3/G4/G5/G13/G16),Jan 2025,Amendment,Class III,Domestic,FEB25.pdf
+KZN Aviation,Domestic,,,Amendment - Class III - RPAS (Type G2/G3/G8/G10/G15/G16) - Postholder change,Jan 2025,Amendment,Class III,Domestic,FEB25.pdf
+KZN Aviation,Domestic,,,Amendment - Class II - Charter (Type N1/N2) - Postholder change,Jan 2025,Amendment,Class II,Domestic,FEB25.pdf
+Ultimate Airways (Ultimate Air),Domestic,FAGC,,Amendment - Class II - Charter (Type N1/N2) - Personnel change,Jan 2025,Amendment,Class II,Domestic,FEB25.pdf
+Balmoral Central Contracts S.A,Domestic,FALA,,Amendment - Class II - Charter (Type N1/N2) - Management plan amendment,Jan 2025,Amendment,Class II,Domestic,FEB25.pdf
+Gemini GIS and Environmental Services CC,Domestic,,,Approved - Class III - RPAS (Type G3/G4/G8/G10/G16),Jan 2025,Approved,Class III,Domestic,FEB25.pdf
+Wianel Transport (Wianel Transprop),Domestic,,,Approved - Class II - Charter (Type N1),Jan 2025,Approved,Class II,Domestic,FEB25.pdf
+Westelike Provinsie Oesbespiting Maatskappy,Domestic,,,Approved - Class III - Aerial work (Type G5/G13),Jan 2025,Approved,Class III,Domestic,FEB25.pdf
+African Wings (Flipping),Domestic,,,Approved - Class III - Aerial work (Type G3/G4/G8/G16),Jan 2025,Approved,Class III,Domestic,FEB25.pdf
+Flighttech Solutions,Domestic,,,Approved - Class III - RPAS (Type G3/G4/G15/G16),Jan 2025,Approved,Class III,Domestic,FEB25.pdf
+Oribi Flying Services Charter (OFS),Domestic,,,Approved - Class II - Charter (Type N1/N2),Jan 2025,Approved,Class II,Domestic,FEB25.pdf
+Air Blade Aviation,Domestic,,,Approved - Class II - Charter (Type N1/N2),Jan 2025,Approved,Class II,Domestic,FEB25.pdf
+QP Drone Tech,Domestic,,,Approved - Class II - UAS (Type G3/G4/G16),Jan 2025,Approved,Class II,Domestic,FEB25.pdf
+Ultimate Airways (Ultimate Air),Grand Central Airport - Worldwide,FAGC,,Amendment - Class II - International charter (Type N1/N4) - Personnel change,Jan 2025,Amendment,Class II,International,FEB25.pdf
+Balmoral Central Contracts S.A,Lanseria International Airport - Worldwide,FALA,,Amendment - Class III - International (Type G7) - Management plan amendment,Jan 2025,Amendment,Class III,International,FEB25.pdf
+Zambia Airways (2014) Limited,Luanda-Johannesburg,LAD,JNB,Amendment FOP - Class I - Scheduled (Type S1) - 14 return flights/week,Jan 2025,Amendment FOP,Class I,International,FEB25.pdf
+Zambia Airways (2014) Limited,Johannesburg-Livingstone,JNB,LVI,Amendment FOP - Class I - Scheduled (Type S1) - 14 return flights/week,Jan 2025,Amendment FOP,Class I,International,FEB25.pdf
+Zambia Airways (2014) Limited,Livingstone-Johannesburg,LVI,JNB,Amendment FOP - Class I - Scheduled (Type S1) - 14 return flights/week,Jan 2025,Amendment FOP,Class I,International,FEB25.pdf
+Zambia Airways (2014) Limited,Johannesburg-Harare,JNB,HRE,Amendment FOP - Class I - Scheduled (Type S1) - 14 return flights/week,Jan 2025,Amendment FOP,Class I,International,FEB25.pdf
+Zambia Airways (2014) Limited,Harare-Luanda,HRE,LAD,Amendment FOP - Class I - Scheduled (Type S1) - 14 return flights/week,Jan 2025,Amendment FOP,Class I,International,FEB25.pdf
+Zambia Airways (2014) Limited,Luanda-Harare,LAD,HRE,Amendment FOP - Class I - Scheduled (Type S1) - 14 return flights/week,Jan 2025,Amendment FOP,Class I,International,FEB25.pdf
+Zambia Airways (2014) Limited,Harare-Johannesburg,HRE,JNB,Amendment FOP - Class I - Scheduled (Type S1) - 14 return flights/week,Jan 2025,Amendment FOP,Class I,International,FEB25.pdf
+Zambia Airways (2014) Limited,Johannesburg-Ndola,JNB,NLA,Amendment FOP - Class I - Scheduled (Type S1) - 14 return flights/week,Jan 2025,Amendment FOP,Class I,International,FEB25.pdf
+Proflight,Lusaka-Durban,LUN,DUR,Amendment FOP - Class I - Scheduled (Type S1) - 28 flights/week,Jan 2025,Amendment FOP,Class I,International,FEB25.pdf
+Proflight,Ndola-Johannesburg,NLA,JNB,Amendment FOP - Class I - Scheduled (Type S1) - 28 flights/week,Jan 2025,Amendment FOP,Class I,International,FEB25.pdf
+Proflight,Lusaka-Johannesburg,LUN,JNB,Amendment FOP - Class I - Scheduled (Type S1) - 28 flights/week,Jan 2025,Amendment FOP,Class I,International,FEB25.pdf
+Proflight,Livingstone-Johannesburg,LVI,JNB,Amendment FOP - Class I - Scheduled (Type S1) - 28 flights/week,Jan 2025,Amendment FOP,Class I,International,FEB25.pdf
+Zambia Airways (2014) Limited,Luanda-Johannesburg,LAD,JNB,Amendment - Class I - Scheduled (Type S1) - 14 return flights/week,Jan 2025,Amendment,Class I,International,FEB25.pdf
+Zambia Airways (2014) Limited,Livingstone-Johannesburg,LVI,JNB,Amendment - Class I - Scheduled (Type S1) - 14 return flights/week,Jan 2025,Amendment,Class I,International,FEB25.pdf
+Zambia Airways (2014) Limited,Johannesburg-Livingstone,JNB,LVI,Amendment - Class I - Scheduled (Type S1) - 14 return flights/week,Jan 2025,Amendment,Class I,International,FEB25.pdf
+Zambia Airways (2014) Limited,Johannesburg-Ndola,JNB,NLA,Amendment - Class I - Scheduled (Type S1) - 14 return flights/week,Jan 2025,Amendment,Class I,International,FEB25.pdf
+Zambia Airways (2014) Limited,Ndola-Johannesburg,NLA,JNB,Amendment - Class I - Scheduled (Type S1) - 14 return flights/week,Jan 2025,Amendment,Class I,International,FEB25.pdf
+Uganda Airlines,Entebbe-Johannesburg,EBB,JNB,Amendment - Class I - Scheduled (Type S1) - 7 return flights,Jan 2025,Amendment,Class I,International,FEB25.pdf
+Lufthansa,International scheduled services,FRA,JNB,Amendment - Class I - Scheduled (Type S1),Jan 2025,Amendment,Class I,International,FEB25.pdf
+TAAG-Angola Airlines,Luanda-Johannesburg,LAD,JNB,Amendment - Class I - Scheduled (Type S1),Jan 2025,Amendment,Class I,International,FEB25.pdf
+TAAG-Angola Airlines,Luanda-Cape Town,LAD,CPT,Amendment - Class I - Scheduled (Type S1),Jan 2025,Amendment,Class I,International,FEB25.pdf
+TAAG-Angola Airlines,Luanda-Durban,LAD,DUR,Amendment - Class I - Scheduled (Type S1),Jan 2025,Amendment,Class I,International,FEB25.pdf
+Swiss International Air Lines,Zurich-Johannesburg-Zurich,ZRH,JNB,Amendment - Class I - Scheduled (Type S1) - 5 return flights,Jan 2025,Amendment,Class I,International,FEB25.pdf
+Mjayeli Security Services,Domestic,,,New application - Class III - UAS operations (Type G3/G4/G16),Jun 2025,New Application,Class III,Domestic,JUL25.pdf
+Baletsema,Domestic,,,New application - Class III - UAS operations (Type G3/G4/G16),Jun 2025,New Application,Class III,Domestic,JUL25.pdf
+Crossing Live,Domestic,,,New application - Class III - RPAS (Type G3/G4/G16),Jun 2025,New Application,Class III,Domestic,JUL25.pdf
+Airlink,Domestic,,,Amendment - Class I (S060D) - Postholder changes (Type S1/S2),Jun 2025,Amendment,Class I,Domestic,JUL25.pdf
+Orsmond Aerial Spray (BMH),Domestic,,,Amendment - Class III (G1166D) - Shareholding and personnel changes (Type G2/G5/G6/G8/G13),Jun 2025,Amendment,Class III,Domestic,JUL25.pdf
+Africa Charter Airline,Domestic,,,Amendment - Class I (S147D) - Postholder changes (Type S1/S2),Jun 2025,Amendment,Class I,Domestic,JUL25.pdf
+Africa Charter Airline,Domestic,,,Amendment - Class II (N963D) - Postholder changes (Type N1/N2),Jun 2025,Amendment,Class II,Domestic,JUL25.pdf
+Africa Charter Airline,Domestic,,,Amendment - Class III (G1476D) - Postholder changes (Type G3/G7),Jun 2025,Amendment,Class III,Domestic,JUL25.pdf
+Africa Charter Airline,Domestic,,,Amendment - Class I (S969D) - Postholder changes (Type S2),Jun 2025,Amendment,Class I,Domestic,JUL25.pdf
+R.G Macdonald (Sport Aviation & Sport Helicopters),Domestic,,,Amendment - Class III (G916D) - Personnel changes (Type G2/G3/G11/G15/G16),Jun 2025,Amendment,Class III,Domestic,JUL25.pdf
+R.G Macdonald (Sport Aviation & Sport Helicopters),Domestic,,,Amendment - Class II (N915D) - Personnel changes (Type N1/N2),Jun 2025,Amendment,Class II,Domestic,JUL25.pdf
+Airlink,JNB-Port Louis Mauritius,JNB,MRU,Amendment - Class I (I/S073) - Addition of international routes,Jun 2025,Amendment,Class I,International,JUL25.pdf
+Airlink,JNB-Kinshasa DRC,JNB,FIH,Amendment - Class I (I/S073) - Addition of international routes,Jun 2025,Amendment,Class I,International,JUL25.pdf
+Airlink,JNB-Harare Zimbabwe,JNB,HRE,Amendment - Class I (I/S073) - Addition of international routes,Jun 2025,Amendment,Class I,International,JUL25.pdf
+Airlink,CPT-Lagos Nigeria,CPT,LOS,Amendment - Class I (I/S073) - Addition of international routes,Jun 2025,Amendment,Class I,International,JUL25.pdf
+Airlink,CPT-Accra Ghana,CPT,ACC,Amendment - Class I (I/S073) - Addition of international routes,Jun 2025,Amendment,Class I,International,JUL25.pdf
+Airlink,CPT-Victoria Falls Zimbabwe,CPT,VFA,Amendment - Class I (I/S073) - Addition of frequencies,Jun 2025,Amendment,Class I,International,JUL25.pdf
+Airlink,JNB-Zanzibar Tanzania,JNB,ZNZ,Amendment - Class I (I/S073) - Addition of frequencies,Jun 2025,Amendment,Class I,International,JUL25.pdf
+Airlink,JNB-Doha Qatar,JNB,DOH,Amendment - Class I (I/S073) - Addition of frequencies,Jun 2025,Amendment,Class I,International,JUL25.pdf
+Airlink,JNB-Walvis Bay Namibia,JNB,WVB,Amendment - Class I (I/S073) - Addition of route,Jun 2025,Amendment,Class I,International,JUL25.pdf
+ALS VS Lugbesputiting (RF),Domestic,,,New application - Class III - Aerial work (Type G5/G6/G8/G13),Jun 2025,New Application,Class III,Domestic,JUL25-1.pdf
+Southern Mapping Aviation,Domestic,FAGC,,Amendment - Class III (1489D) - Personnel changes (Type G3/G4),Jun 2025,Amendment,Class III,Domestic,JUL25-1.pdf
+Surveying and Resource Management Cc,Domestic,,,Amendment - Class III (G1421D) - Personnel changes - UAS (Type G3/G4/G16),Jun 2025,Amendment,Class III,Domestic,JUL25-1.pdf
+SA Red Cross Air Mercy Service,Domestic,CPT,,Amendment - Class II (N980D) - Management plan changes (Type N1/N2),Jun 2025,Amendment,Class II,Domestic,JUL25-1.pdf
+SA Red Cross Air Mercy Service,Domestic,CPT,,Amendment - Class III (G981D) - Management plan changes (Type G7/G15/G16),Jun 2025,Amendment,Class III,Domestic,JUL25-1.pdf
+Wildflite cc (formerly Junox300 cc),Domestic,,,Amendment - Class III (G1066D) - Name change and personnel (Type G2-G16 UAS),Jun 2025,Amendment,Class III,Domestic,JUL25-1.pdf
+Wildflite cc (formerly Junox300 cc),Domestic,,,Amendment - Class II (N1065D) - Name change and personnel (Type N1/N2),Jun 2025,Amendment,Class II,Domestic,JUL25-1.pdf
+Global Aviation Operations (Global Airways and Lift),Domestic,JNB,,Exemption - Class I (S1126D) - Damp lease foreign aircraft for scheduled passenger services (Type S1/S2),Jun 2025,Exemption,Class I,Domestic,JUL25-1.pdf
+ALS VS Lugbesputiting (RF),South Africa,,,New application - Class III - International aerial work (Type G5/G6/G8/G13),Jun 2025,New Application,Class III,International,JUL25-1.pdf
+SolitAir Aviation Services DWC LLC,Dubai-Nairobi-Johannesburg,DXB,JNB,FOP Application - Class IV - Cargo for FedEx (Type NV4) - 8 flights,Jun 2025,FOP Application,Class IV,International,JUL25-1.pdf
+SA Red Cross Air Mercy Service,Cape Town International Airport - Worldwide,CPT,,Amendment - Class III (I/G193) - Management plan changes (Type G7/G16),Jun 2025,Amendment,Class III,International,JUL25-1.pdf
+Leading Edge Flight School (Leading Edge Air Services),Domestic,,,New application - Class III - Scenic flights (Type G3/G4/G10/G16),Aug 2025,New Application,Class III,Domestic,SEP25.pdf
+Innovation Investments,Domestic,,,New application - Class III - UAS operations (Type G3/G4/G16),Aug 2025,New Application,Class III,Domestic,SEP25.pdf
+Saphire Blue Drone,Domestic,,,Amendment - Class III - UAS operations addition of Type G5 agricultural spraying,Aug 2025,Amendment,Class III,Domestic,SEP25.pdf
+Grace Air,Domestic,,,Amendment - Class III - Flipping with non-type certificated aircraft (Type G3/G4/G8/G10/G15/G16),Aug 2025,Amendment,Class III,Domestic,SEP25.pdf
+Vula Air Technologies (Vula Air),Domestic,,,Amendment - Class III - UAS operations - Address and postholder changes (Type G2-G16),Aug 2025,Amendment,Class III,Domestic,SEP25.pdf
+Air Ambulance Health Services,Domestic,,,Amendment - Class III - Personnel change (Type G7),Aug 2025,Amendment,Class III,Domestic,SEP25.pdf
+Orsmond Aerial Spray,Bethlehem Airfield - Worldwide,,,New application - Class III - International aerial work (Type G5/G6/G8),Aug 2025,New Application,Class III,International,SEP25.pdf
+Air Ambulance Health Services,Bramfisher International Airport - Worldwide,BFN,,Amendment - Class II - International charter - Personnel change (Type N1/N2),Aug 2025,Amendment,Class II,International,SEP25.pdf
+Aviam Aviation,Domestic,,,New application - Class III - UAS operations (Type G2/G3/G4/G5/G16),Sep 2025,New Application,Class III,Domestic,SEP25-2.pdf
+Integrated Aerial Systems,Domestic,,,Amendment - Class III (G1326D) - Shareholding and address change; addition of Type G codes - RPAS,Sep 2025,Amendment,Class III,Domestic,SEP25-2.pdf
+Federal Airlines (Pelican Air Services / Fastjet Africa),Domestic,JNB,,Amendment - Class I (S970D) - Trading name change and personnel (Type S1/S2),Sep 2025,Amendment,Class I,Domestic,SEP25-2.pdf
+Federal Airlines (Pelican Air Services / Fastjet Africa),Domestic,JNB,,Amendment - Class II (N933D) - Trading name change and personnel (Type N1/N2),Sep 2025,Amendment,Class II,Domestic,SEP25-2.pdf
+Orsmond Aerial Spray,Domestic,,,Amendment - Class III (G253D) - Personnel change (Type G2/G4-G6/G8/G11/G13/G14),Sep 2025,Amendment,Class III,Domestic,SEP25-2.pdf
+Kishugu Aviation,Domestic,,,Amendment - Class II (N1109D) - Shareholding and personnel changes (Type N1/N2),Sep 2025,Amendment,Class II,Domestic,SEP25-2.pdf
+Kishugu Aviation,Domestic,,,Amendment - Class III (G921D) - Shareholding and personnel changes - Fire fighting RPAS (Type G3/G5/G8/G10/G13/G15/G16),Sep 2025,Amendment,Class III,Domestic,SEP25-2.pdf
+Federal Airlines (Pelican Air Services / Fastjet Africa),International,JNB,,Amendment - Class I (I/S135) - Trading name change and personnel (Type S1),Sep 2025,Amendment,Class I,International,SEP25-2.pdf
+Federal Airlines (Pelican Air Services / Fastjet Africa),Africa and Indian Ocean Islands,JNB,,Amendment - Class II (I/N200) - Trading name change and personnel (Type N1/N4),Sep 2025,Amendment,Class II,International,SEP25-2.pdf
+Kishugu Aviation,Worldwide,,,Amendment - Class III (I/G447) - Shareholding and personnel changes (Type G3/G5/G8/G10/G13/G15),Sep 2025,Amendment,Class III,International,SEP25-2.pdf
+Eagle Eye Security Specialist,Domestic,JNB,,New application - Class III - RPAS (Type G3/G4/G5/G8/G11/G13/G15/G16),Oct 2025,New Application,Class III,Domestic,OCT25.pdf
+Aeronautic Solutions South Africa,Domestic,,,Amendment - Class III (G770D) - Personnel changes - Powerline inspections and ship to shore (Type G2/G3/G5/G7/G8/G10/G11/G15/G16),Oct 2025,Amendment,Class III,Domestic,OCT25.pdf
+Aeronautic Solutions South Africa,Domestic,,,Amendment - Class II (N769D) - Personnel changes (Type N1/N2),Oct 2025,Amendment,Class II,Domestic,OCT25.pdf
+TitanOffshore,Domestic,,,Amendment - Class III (G795D) - Personnel changes - Ship to shore (Type G3/G10/G15/G16),Oct 2025,Amendment,Class III,Domestic,OCT25.pdf
+TitanOffshore,Domestic,,,Amendment - Class II (N794D) - Personnel changes (Type N1/N2),Oct 2025,Amendment,Class II,Domestic,OCT25.pdf
+East London Air Services,Domestic,ELS,,Amendment - Class II (N640D) - Personnel and membership changes (Type N1/N2),Oct 2025,Amendment,Class II,Domestic,OCT25.pdf
+East London Air Services,Domestic,ELS,,Amendment - Class III (G736D) - Personnel and membership changes (Type G3/G7/G10/G15),Oct 2025,Amendment,Class III,Domestic,OCT25.pdf
+Leading Edge Aviation CC,Domestic,MQP,,Amendment - Class III (G1385D) - Personnel changes (Type G3/G8/G15),Oct 2025,Amendment,Class III,Domestic,OCT25.pdf
+Aeronautic Solutions South Africa,Knoppieslaagte - Worldwide,,,New application - Class II - International air transport service (Type N1/N4),Oct 2025,New Application,Class II,International,OCT25.pdf
+Aeronautic Solutions South Africa,Knoppieslaagte - Worldwide,,,New application - Class III - International powerline inspection and ship to shore (Type G2/G3/G5/G8/G10/G11/G15/G16),Oct 2025,New Application,Class III,International,OCT25.pdf
+Leading Edge Aviation cc,Nelspruit Municipal Airport Mbombela,MQP,,New application - Class III - International aerial work (Type G3/G8/G15),Oct 2025,New Application,Class III,International,OCT25.pdf
+East London Air Services,East London Airport - Eastern Cape,ELS,,New application - Class II - International charter (Type N1/N4),Oct 2025,New Application,Class II,International,OCT25.pdf
+East London Air Services,East London Airport - Eastern Cape,ELS,,New application - Class III - International aerial work (Type G3/G7/G10/G15),Oct 2025,New Application,Class III,International,OCT25.pdf
+South African Airways,Johannesburg-Zanzibar,JNB,ZNZ,Amendment - Class I (I/S094) - Addition of routes,Oct 2025,Amendment,Class I,International,OCT25.pdf
+South African Airways,OR Tambo-Doha,JNB,DOH,Amendment - Class I (I/S094) - Addition of routes,Oct 2025,Amendment,Class I,International,OCT25.pdf
+Air Blade Aviation (Pty) Ltd,Domestic,CPT,,New application - Class III - Offshore operations (Type G2/G3/G4/G10/G15/G16),Oct 2025,New Application,Class III,Domestic,OCT25-2.pdf
+Fly X (Fly X),Domestic,,,New application - Class II - Charter (Type N1/N2),Oct 2025,New Application,Class II,Domestic,OCT25-2.pdf
+Air Blade Aviation,Domestic,CPT,,Amendment - Class II (G1571D) - Personnel change (Type N1/N2),Oct 2025,Amendment,Class II,Domestic,OCT25-2.pdf
+Terzin Trading 3 CC (Simola Air),Domestic,CPT,,Amendment - Class II (N1013D) - Personnel change (Type N1/N2),Oct 2025,Amendment,Class II,Domestic,OCT25-2.pdf
+Terzin Trading 3 CC (Simola Air),Domestic,CPT,,Amendment - Class III (G1014D) - Personnel change - Night vision and offshore (Type G2-G16),Oct 2025,Amendment,Class III,Domestic,OCT25-2.pdf
+Air Blade Aviation,Cape Town International Airport - Worldwide,CPT,,New application - Class III - International offshore operations (Type G2/G3/G4/G10/G15/G16),Oct 2025,New Application,Class III,International,OCT25-2.pdf
+Fly X,Lanseria Airport,FALA,,New application - Class II - International charter (Type N1/N4),Oct 2025,New Application,Class II,International,OCT25-2.pdf
+KZN Aviation,Virginia Airport Durban - Worldwide,VIR,,New application - Class II - International charter (Type N1/N2),Oct 2025,New Application,Class II,International,OCT25-2.pdf
+Terzin Trading 3 CC (Simola Air),Cape Town International Airport,CPT,,Amendment - Class III (I/G463) - Personnel change - Night vision and offshore (Type G2-G16),Oct 2025,Amendment,Class III,International,OCT25-2.pdf
+Terzin Trading 3 CC (Simola Air),Cape Town International Airport,CPT,,Amendment - Class II (I/N462) - Personnel change (Type N1/N4),Oct 2025,Amendment,Class II,International,OCT25-2.pdf
+Air Blade Aviation,Cape Town International Airport,CPT,,Amendment - Class II (I/N442) - Personnel change (Type N1/N2),Oct 2025,Amendment,Class II,International,OCT25-2.pdf
+Airlink,JNB-Windhoek Namibia,JNB,WDH,Amendment - Class I (I/S073) - Addition of route,Oct 2025,Amendment,Class I,International,OCT25-2.pdf
+Le Rubis Transport (Le Rubis Air),Domestic,,,New application - Class II - Charter (Type N1/N2),Nov 2025,New Application,Class II,Domestic,NOV25.pdf
+Aerial Dynamix,Domestic,,,New application - Class III - UAS operations incl pipeline/powerline inspections and security (Type G2-G16),Nov 2025,New Application,Class III,Domestic,NOV25.pdf
+Le Rubis Transport (Le Rubis Air),Grand Central Airport - Africa & Europe,FAGC,,New application - Class II - International charter (Type N1/N2/N3/N4),Nov 2025,New Application,Class II,International,NOV25.pdf
+Airlink,Lanseria-Harare Zimbabwe,FALA,HRE,Amendment - Class I (I/S073) - Addition of routes - 14 return flights,Nov 2025,Amendment,Class I,International,NOV25.pdf
+Airlink,Lanseria/JNB-Bulawayo Zimbabwe,JNB,BUQ,Amendment - Class I (I/S073) - Addition of routes - 7 return flights/week,Nov 2025,Amendment,Class I,International,NOV25.pdf
+Airlink,CPT-Zanzibar Tanzania,CPT,ZNZ,Amendment - Class I (I/S073) - Addition of routes - 7 return flights/week,Nov 2025,Amendment,Class I,International,NOV25.pdf
+ALS VS Lugbesputiting (RF),Domestic,,,Amendment - Class III (G1595D) - Personnel change (Type G5/G6/G8/G13),Dec 2025,Amendment,Class III,Domestic,DEC25.pdf
+Sky Sprayers,Domestic,,,Amendment - Class III (G627D) - Personnel change (Type G4/G5/G8),Dec 2025,Amendment,Class III,Domestic,DEC25.pdf
+Greenfly Aviation,Domestic,,,Amendment - Class III (G1383D) - Personnel change - UAS insect release (Type G3-G16),Dec 2025,Amendment,Class III,Domestic,DEC25.pdf
+Maverick Air Charters,Domestic,FAWB,,Amendment - Class II (N856D) - Addition of Category A2 (Type N1/N2),Dec 2025,Amendment,Class II,Domestic,DEC25.pdf
+South African Airways,Domestic,JNB,,Amendment - Class I (S/552D) - Personnel change (Type S1/S2),Dec 2025,Amendment,Class I,Domestic,DEC25.pdf
+South African Airways,Domestic,JNB,,Amendment - Class II (N/553D) - Personnel change (Type N1/N2),Dec 2025,Amendment,Class II,Domestic,DEC25.pdf
+South African Airways,Domestic,JNB,,Amendment - Class III (S/552D) - Personnel change (Type G2),Dec 2025,Amendment,Class III,Domestic,DEC25.pdf
+Maverick Air Charters,Africa,FAWB,,New application - Class II - International charter (Type N1/N2),Dec 2025,New Application,Class II,International,DEC25.pdf
+ALS VS Lugbesputiting (RF),Domestic,,,Amendment - Class III (I/G468) - Personnel change (Type G5/G6/G8/G13),Dec 2025,Amendment,Class III,International,DEC25.pdf
+Global Aviation Operations (Global Airways & Lift),Durban-Mauritius,DUR,MRU,Amendment - Class I (I/S094) - Addition of route - 3 frequencies/week,Dec 2025,Amendment,Class I,International,DEC25.pdf
+South African Airways,Domestic,JNB,,Amendment - Class I (I/S094) - Personnel change (Type S1/S2),Dec 2025,Amendment,Class I,International,DEC25.pdf
+South African Airways,Domestic,JNB,,Amendment - Class II (I/S095) - Personnel change (Type N1/N2/N3/N4),Dec 2025,Amendment,Class II,International,DEC25.pdf
+Spiral Air Charters CC (LBI Charters),Domestic,FAWB,,Amendment - Class II (N986D) - Personnel change; addition of Category A1 (Type N1/N2),Jan 2026,Amendment,Class II,Domestic,JAN26.pdf
+Southern African Wildlife College,Domestic,,,New application - Class III - RPAS (Type G3/G4),Jan 2026,New Application,Class III,Domestic,JAN26.pdf
+Skylab Aerial Services,Domestic,,,New application - Class III - Aerial work (Type G5),Jan 2026,New Application,Class III,Domestic,JAN26.pdf
+Fix Wing Aerial Spray,Domestic,FAWB,,New application - Class III - Aerial work (Type G5/G8),Jan 2026,New Application,Class III,Domestic,JAN26.pdf
+Moya X (MoyaX),Domestic,,,New application - Class III - Aerial work (Type G5/G6/G13),Jan 2026,New Application,Class III,Domestic,JAN26.pdf
+Caelum Technologies,Domestic,,,Amendment - Class III (G1245D) - Personnel change and addition of Type G codes - RPAS (Type G3/G4/G16),Jan 2026,Amendment,Class III,Domestic,JAN26.pdf
+RocketDNA ZA,Domestic,,,Amendment - Class III (G1279D) - Personnel change - RPAS (Type G3/G4/G5/G8/G10/G16),Jan 2026,Amendment,Class III,Domestic,JAN26.pdf
+Compact Aerial Services (Proconics Advance Solutions),Domestic,,,Amendment - Class III (G1257D) - Personnel and business name change - UAS (Type G3/G4/G16),Jan 2026,Amendment,Class III,Domestic,JAN26.pdf
+Spiral Air Charters CC (LBI Charters),Wonderboom Airport - International,FAWB,,Amendment - Class II (I/N217) - Addition of Type N1 and Category A1 (Type N2),Jan 2026,Amendment,Class II,International,JAN26.pdf
+Global Aviation Operations (Global Airways & Lift),King Shaka - Saint Pierre Pierrefonds,DUR,FMEP,Amendment - Class I (I/S094) - Addition of route - 3 freq/week,Jan 2026,Amendment,Class I,International,JAN26.pdf
+Airlink,JNB-Paris Charles de Gaulle,JNB,CDG,Amendment - Class I (I/S073) - Addition of routes - 1/week,Jan 2026,Amendment,Class I,International,JAN26.pdf
+Airlink,JNB-Frankfurt Germany,JNB,FRA,Amendment - Class I (I/S073) - Addition of routes - 1/week,Jan 2026,Amendment,Class I,International,JAN26.pdf
+Airlink,JNB-London Heathrow,JNB,LHR,Amendment - Class I (I/S073) - Addition of routes - 1/week,Jan 2026,Amendment,Class I,International,JAN26.pdf
+Air2Ground Services,Domestic,,,New application - Class III - RPAS operations (Type G3/G4/G5/G8/G10/G13/G16),Feb 2026,New Application,Class III,Domestic,FEB26.pdf
+Sport Helicopters Cape Town,Domestic,CPT,,New application - Class II - Helicopter charter (Type N1/N2),Feb 2026,New Application,Class II,Domestic,FEB26.pdf
+Sport Helicopters Cape Town,Domestic,CPT,,New application - Class III - Helicopter flipping/commercial operations (Type G2/G3/G11/G15/G16),Feb 2026,New Application,Class III,Domestic,FEB26.pdf
+Ultimate Heli,Domestic,,,Amendment - Class II (N1042D) - Management plan changes (Type N1/N2),Feb 2026,Amendment,Class II,Domestic,FEB26.pdf
+Ultimate Heli,Domestic,,,Amendment - Class III (G1043D) - Management plan changes - Ship to shore/night vision/RPAS (Type G2-G16),Feb 2026,Amendment,Class III,Domestic,FEB26.pdf
+ExecuJet Aviation,Domestic,FALA,,Amendment - Class II (N996D) - Management plan changes (Type N1/N2),Feb 2026,Amendment,Class II,Domestic,FEB26.pdf
+MPATI Freight Cargo (MFC Air Services),Domestic,FAGC,,Amendment - Class II (N1587D) - Management plan changes (Type N1/N2),Feb 2026,Amendment,Class II,Domestic,FEB26.pdf
+Buffalo Trust IT (SAAY Fly Trust),Domestic,,,Amendment - Class III (G975D) - Company name change and management plan changes (Type G2-G10),Feb 2026,Amendment,Class III,Domestic,FEB26.pdf
+Buffalo Trust IT (SAAY Fly Trust),Domestic,,,Amendment - Class II (N974D) - Company name change and management plan changes (Type N1/N2),Feb 2026,Amendment,Class II,Domestic,FEB26.pdf
+DHL Aviation,Domestic,,,Amendment - Class II (N411D) - Management plan change (Type N2),Feb 2026,Amendment,Class II,Domestic,FEB26.pdf
+Airlink,Domestic,JNB,,Amendment - Class I (S060D) - Personnel changes (Type S1/S2(E)),Feb 2026,Amendment,Class I,Domestic,FEB26.pdf
+MPATI Freight Cargo (MFC Air Services),International,FAGC,,New application - Class II - International charter (Type N1/N2),Feb 2026,New Application,Class II,International,FEB26.pdf
+Ultimate Heli,International,,,Amendment - Class II (I/N424D) - Management plan changes - Ship to shore/night vision (Type G2-G16),Feb 2026,Amendment,Class II,International,FEB26.pdf
+Ultimate Heli,International,,,Amendment - Class III (I/G425D) - Management plan changes (Type N1/N4),Feb 2026,Amendment,Class III,International,FEB26.pdf
+ExecuJet Aviation,International,FALA,,Amendment - Class II (I/N212) - Management plan changes (Type N1/N4(E)),Feb 2026,Amendment,Class II,International,FEB26.pdf
+Buffalo Trust IT (SAAY Fly Trust),International,,,Amendment - Class II (I/N212) - Company name change and management plan changes (Type N1),Feb 2026,Amendment,Class II,International,FEB26.pdf
+Buffalo Trust IT (SAAY Fly Trust),International,,,Amendment - Class III (I/G213) - Company name change and management plan changes (Type G2-G10),Feb 2026,Amendment,Class III,International,FEB26.pdf
+DHL Aviation,International,,,Amendment - Class I (I/S144) - Management plan change (Type S2),Feb 2026,Amendment,Class I,International,FEB26.pdf
+Airlink,International,JNB,,Amendment - Class I (S060D) - Personnel changes (Type S1/S2(E)),Feb 2026,Amendment,Class I,International,FEB26.pdf
+Fireblade Aviation,International,JNB,,Amendment - Class II (I/N274) - Personnel change (Type N1/N4) - Erratum correction,Feb 2026,Amendment,Class II,International,FEB26.pdf
+Global Aviation Operations (Global Airways and Lift),OR Tambo-Zanzibar,JNB,ZNZ,Approved - Amendment - Addition of frequencies (Type S1/S2) - 3 flights/week,Feb 2026,Approved,Class I,International,FEB26.pdf
+Airlink,OR Tambo-Windhoek Namibia,JNB,WDH,Approved - Amendment - Addition of frequencies (Type S1) - 7 return flights/week,Feb 2026,Approved,Class I,International,FEB26.pdf
+South African Airways,Johannesburg-Zanzibar,JNB,ZNZ,Approved - Amendment - Addition of frequencies (Type S1/S2) - unlimited,Feb 2026,Approved,Class I,International,FEB26.pdf
+South African Airways,Johannesburg-Doha,JNB,DOH,Approved - Amendment - Addition of frequencies (Type S1/S2) - 7 freq/week,Feb 2026,Approved,Class I,International,FEB26.pdf
+Leading Edge Aviation cc,Domestic,MQP,,Approved - New application - Class III (Type G3/G8/G15),Feb 2026,Approved,Class III,Domestic,FEB26.pdf
+East London Air Services,East London Airport - International,ELS,,Approved - New application - Class II (I/N473) (Type N1/N4),Feb 2026,Approved,Class II,International,FEB26.pdf
+East London Air Services,East London Airport - International,ELS,,Approved - New application - Class III (I/G474) (Type G3/G7/G10/G15),Feb 2026,Approved,Class III,International,FEB26.pdf
+Aeronautic Solutions South Africa,International,,,Approved - New application - Class II (I/N471) (Type N1/N4),Feb 2026,Approved,Class II,International,FEB26.pdf
+Aeronautic Solutions South Africa,International,,,Approved - New application - Class III - Powerline inspections and ship to shore (Type G2/G3/G5/G8/G10/G11/G15/G16),Feb 2026,Approved,Class III,International,FEB26.pdf
+Orsmond Aerial Spray,International,,,Approved - Amendment - Class III (I/G470) (Type G5/G6/G8),Feb 2026,Approved,Class III,International,FEB26.pdf
+Starlite Aviation Operations,International,,,Amendment - Class II (I/N226) - Personnel changes (Type N1/N4),Feb 2026,Amendment,Class II,International,FEB26.pdf
+Starlite Aviation Operations,International,,,Amendment - Class III - Personnel changes - Undersling/winching/ship to shore/FRIES/NVS/FLIR (Type G2/G3/G5/G7/G8/G10/G15/G16),Feb 2026,Amendment,Class III,International,FEB26.pdf
